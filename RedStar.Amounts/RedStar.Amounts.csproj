@@ -39,10 +39,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Amount.cs" />
+    <Compile Include="IUnitConsumer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Unit.cs" />
+    <Compile Include="UnitConversionClassAttribute.cs" />
     <Compile Include="UnitConversionException.cs" />
+    <Compile Include="UnitDefinitionClassAttribute.cs" />
+    <Compile Include="UnitManager.cs" />
     <Compile Include="UnitType.cs" />
+    <Compile Include="UnknownUnitException.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
