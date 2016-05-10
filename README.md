@@ -38,3 +38,8 @@ In the second example, the `area` variable, will automatically have a value and
 a unit. The unit will be m².
 
 This makes it easier and more fail-proof to do calculations later.
+
+## Source, license
+
+This code was taken and built upon from CodeProject](http://www.codeproject.com/Articles/611731/Working-with-Units-and-Amounts).
+Credit is due to Rudi Breedenraedt. The code is licensed under the CPOL.
