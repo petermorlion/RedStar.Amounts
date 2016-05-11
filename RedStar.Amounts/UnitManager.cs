@@ -137,9 +137,9 @@ namespace RedStar.Amounts
             if (unit == null) throw new ArgumentNullException("unit");
 
             // Check if unit already registered:
-            foreach (Unit u in Instance.allUnits)
+            foreach (var u in Instance.allUnits)
             {
-                if (Object.ReferenceEquals(u, unit)) return;
+                if (ReferenceEquals(u, unit)) return;
             }
 
             // Register unit in allUnits:

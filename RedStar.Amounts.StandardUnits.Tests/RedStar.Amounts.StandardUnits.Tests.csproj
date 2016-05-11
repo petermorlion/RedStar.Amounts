@@ -5,14 +5,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{441C12B4-9E6B-4D63-9C9E-D7AA1E2FDF32}</ProjectGuid>
+    <ProjectGuid>{3837C3CA-4D5A-4988-8928-44557712738D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RedStar.Amounts.Tests</RootNamespace>
-    <AssemblyName>RedStar.Amounts.Tests</AssemblyName>
+    <RootNamespace>RedStar.Amounts.StandardUnits.Tests</RootNamespace>
+    <AssemblyName>RedStar.Amounts.StandardUnits.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <NuGetPackageImportStamp>df667fa1</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>20e8cef9</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -34,8 +34,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -59,12 +57,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AmountMathTests.cs" />
-    <Compile Include="AmountTests.cs" />
+    <Compile Include="RelativeUnitsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StreamExtensions.cs" />
-    <Compile Include="UnitManagerTests.cs" />
-    <Compile Include="UnitTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RedStar.Amounts.StandardUnits\RedStar.Amounts.StandardUnits.csproj">

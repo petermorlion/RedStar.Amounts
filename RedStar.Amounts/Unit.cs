@@ -202,12 +202,17 @@ namespace RedStar.Amounts
         public static bool operator ==(Unit left, Unit right)
         {
             // Special cases:
-            if (Object.ReferenceEquals(left, right))
+            if (ReferenceEquals(left, right))
                 return true;
 
             // Compare content:
-            left = left ?? Unit.none;
-            right = right ?? Unit.none;
+            // Compare content:
+            if ((object)left == null)
+                return false;
+
+            if ((object)right == null)
+                return false;
+
             return (left.factor == right.factor) && (left.unitType == right.unitType);
         }
 

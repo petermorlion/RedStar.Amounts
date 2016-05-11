@@ -49,6 +49,7 @@
     <Compile Include="PhysicsConstant.cs" />
     <Compile Include="PressureUnits.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RelativeUnits.cs" />
     <Compile Include="SIUnitTypes.cs" />
     <Compile Include="SpeedUnits.cs" />
     <Compile Include="SurfaceUnits.cs" />
