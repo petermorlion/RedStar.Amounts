@@ -146,36 +146,38 @@ namespace RedStar.Amounts
             return amounts;
         }
 
-        public static Amount Parse(string value)
+        public static Amount Parse(string s)
         {
-            return Parse(value, null);
+            return Parse(s, null);
         }
 
-        public static Amount Parse(string value, IFormatProvider formatProvider)
+        public static Amount Parse(string s, IFormatProvider formatProvider)
         {
-            if (string.IsNullOrEmpty(value))
+            if (string.IsNullOrEmpty(s))
                 return null;
 
-            var spaceIndex = value.IndexOf(' ');
-            var valueString = value.Substring(0, spaceIndex);
-            var amountValue = double.Parse(valueString, formatProvider);
-            var unitString = value.Substring(spaceIndex + 1).TrimStart('(').TrimEnd(')');
-
+            double amountValue;
+            var unit = Unit.None;
             var isNegative = false;
-            if (unitString.EndsWith(" neg"))
-            {
-                unitString = unitString.Remove(unitString.Length - 4);
-                isNegative = true;
-            }
 
-            Unit unit;
-            try
+            if (s.Contains(" "))
             {
-                unit = UnitManager.GetUnitByName(unitString);
+                var spaceIndex = s.IndexOf(' ');
+                var valueString = s.Substring(0, spaceIndex);
+                amountValue = double.Parse(valueString, formatProvider);
+                var unitString = s.Substring(spaceIndex + 1).TrimStart('(').TrimEnd(')');
+
+                if (unitString.EndsWith(" neg"))
+                {
+                    unitString = unitString.Remove(unitString.Length - 4);
+                    isNegative = true;
+                }
+
+                unit = Unit.Parse(unitString);
             }
-            catch (UnknownUnitException)
+            else
             {
-                unit = UnitManager.GetUnitBySymbol(unitString);
+                amountValue = double.Parse(s, formatProvider);
             }
 
             return new Amount(amountValue, unit) * (isNegative ? -1 : 1);

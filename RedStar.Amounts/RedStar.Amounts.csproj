@@ -48,6 +48,7 @@
     <Compile Include="UnitConversionException.cs" />
     <Compile Include="UnitDefinitionClassAttribute.cs" />
     <Compile Include="UnitManager.cs" />
+    <Compile Include="UnitParser.cs" />
     <Compile Include="UnitType.cs" />
     <Compile Include="UnknownUnitException.cs" />
   </ItemGroup>

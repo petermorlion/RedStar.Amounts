@@ -42,6 +42,11 @@ namespace RedStar.Amounts
             get { return Unit.none; }
         }
 
+        public static Unit Parse(string s)
+        {
+            return UnitParser.Parse(s);
+        }
+
         #endregion Constructor methods
 
         #region Public implementation

@@ -720,5 +720,13 @@ namespace RedStar.Amounts.Tests
             Assert.Equal(null, Amount.Parse("", CultureInfo.InvariantCulture));
             Assert.Equal(b, Amount.Parse("1,234.5678 meter", CultureInfo.InvariantCulture));
         }
+
+        [Fact]
+        public void Parsing03Test()
+        {
+            var b = new Amount(0, Unit.None);
+
+            Assert.Equal(b, Amount.Parse("0", CultureInfo.InvariantCulture));
+        }
     }
 }
