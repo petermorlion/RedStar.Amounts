@@ -44,7 +44,6 @@ namespace RedStar.Amounts.Tests
 
             sum += a;
 
-            Console.WriteLine("Sum = {0}", sum);
             Assert.Equal(expected, sum);
         }
 
@@ -57,7 +56,6 @@ namespace RedStar.Amounts.Tests
 
             sum += a;
 
-            Console.WriteLine("Sum = {0}", sum);
             Assert.Equal(expected, sum);
         }
 
@@ -96,7 +94,6 @@ namespace RedStar.Amounts.Tests
 
             Assert.Equal("15 %", a.ToString("0 US"));
             Assert.Equal(0.15, (double)a);
-            Console.WriteLine(a * b);
             Assert.Equal(45.0, (a * b).ConvertedTo(TimeUnits.Minute).Value);
         }
 
@@ -136,16 +133,6 @@ namespace RedStar.Amounts.Tests
             var a = new Amount(146.0, TimeUnits.Second);
             var values = a.Split(new[] { TimeUnits.Hour, TimeUnits.Minute, TimeUnits.Second }, 0);
 
-            var separator = "";
-            foreach (var v in values)
-            {
-                Console.Write(separator);
-                Console.Write(v);
-                separator = ", ";
-            }
-
-            Console.WriteLine();
-
             Assert.Equal(3, values.Length);
             Assert.Equal(new Amount(0.0, TimeUnits.Hour), values[0]);
             Assert.Equal(new Amount(2.0, TimeUnits.Minute), values[1]);
@@ -158,14 +145,6 @@ namespace RedStar.Amounts.Tests
             var a = new Amount(10.5, LengthUnits.Meter);
             var values = a.Split(new[] { LengthUnits.Yard, LengthUnits.Foot, LengthUnits.Inch }, 1);
 
-            var separator = "";
-            foreach (var v in values)
-            {
-                Console.Write(separator);
-                Console.Write(v);
-                separator = ", ";
-            }
-
             Assert.Equal(3, values.Length);
             Assert.Equal(new Amount(11.0, LengthUnits.Yard), values[0]);
             Assert.Equal(new Amount(1.0, LengthUnits.Foot), values[1]);
@@ -177,14 +156,6 @@ namespace RedStar.Amounts.Tests
         {
             var a = new Amount(Math.Sqrt(13), LengthUnits.Meter);
             var values = a.Split(new[] { LengthUnits.Meter, LengthUnits.DeciMeter, LengthUnits.CentiMeter, LengthUnits.MilliMeter }, 0);
-
-            var separator = "";
-            foreach (var v in values)
-            {
-                Console.Write(separator);
-                Console.Write(v);
-                separator = ", ";
-            }
 
             Assert.Equal(new Amount(3.0, LengthUnits.Meter), values[0]);
             Assert.Equal(new Amount(6.0, LengthUnits.DeciMeter), values[1]);
@@ -308,9 +279,6 @@ namespace RedStar.Amounts.Tests
             var a2after = (Amount)g.Deserialize(buffer);
 
             buffer.Close();
-
-            Console.WriteLine("{0} => {1}", a1before, a1after);
-            Console.WriteLine("{0} => {1}", a2before, a2after);
 
             Assert.Equal(a1before, a1after);
             Assert.Equal(a2before, a2after);
@@ -474,18 +442,11 @@ namespace RedStar.Amounts.Tests
             var serializer = new NetDataContractSerializer();
             serializer.Serialize(stream, a);
 
-            // Show serialization:
-            stream.Position = 0;
-            Console.WriteLine(stream.ToXmlString());
-            Console.WriteLine();
-
             // Deserialize instance:
             stream.Position = 0;
             var b = (Amount)serializer.Deserialize(stream);
 
             // Compare:
-            Console.WriteLine(a);
-            Console.WriteLine(b);
             Assert.Equal(a, b);
         }
 
@@ -505,11 +466,6 @@ namespace RedStar.Amounts.Tests
             var serializer = new NetDataContractSerializer();
             serializer.WriteObject(stream, aa);
 
-            // Show serialization:
-            stream.Position = 0;
-            Console.WriteLine(stream.ToXmlString());
-            Console.WriteLine();
-
             // Deserialize instance:
             stream.Position = 0;
             var ba = (Amount[])serializer.ReadObject(stream);
@@ -518,8 +474,6 @@ namespace RedStar.Amounts.Tests
             Assert.Equal(aa.Length, ba.Length);
             for (var i = 0; i < aa.Length; i++)
             {
-                Console.WriteLine(aa[i]);
-                Console.WriteLine(ba[i]);
                 Assert.Equal(aa[i], ba[i]);
             }
         }
@@ -534,18 +488,11 @@ namespace RedStar.Amounts.Tests
             var serializer = new DataContractSerializer(typeof(Amount));
             serializer.WriteObject(stream, a);
 
-            // Show serialization:
-            stream.Position = 0;
-            Console.WriteLine(stream.ToXmlString());
-            Console.WriteLine();
-
             // Deserialize instance:
             stream.Position = 0;
             var b = (Amount)serializer.ReadObject(stream);
 
             // Compare:
-            Console.WriteLine(a);
-            Console.WriteLine(b);
             Assert.Equal(a, b);
         }
 
@@ -565,11 +512,6 @@ namespace RedStar.Amounts.Tests
             var serializer = new DataContractSerializer(typeof(Amount[]));
             serializer.WriteObject(stream, aa);
 
-            // Show serialization:
-            stream.Position = 0;
-            Console.WriteLine(stream.ToXmlString());
-            Console.WriteLine();
-
             // Deserialize instance:
             stream.Position = 0;
             var ba = (Amount[])serializer.ReadObject(stream);
@@ -578,8 +520,6 @@ namespace RedStar.Amounts.Tests
             Assert.Equal(aa.Length, ba.Length);
             for (var i = 0; i < aa.Length; i++)
             {
-                Console.WriteLine(aa[i]);
-                Console.WriteLine(ba[i]);
                 Assert.Equal(aa[i], ba[i]);
             }
         }
@@ -599,8 +539,6 @@ namespace RedStar.Amounts.Tests
             var b = (Amount)formatter.Deserialize(stream);
 
             // Compare:
-            Console.WriteLine(a);
-            Console.WriteLine(b);
             Assert.Equal(a, b);
         }
 
@@ -614,18 +552,11 @@ namespace RedStar.Amounts.Tests
             var formatter = new SoapFormatter();
             formatter.Serialize(stream, a);
 
-            // Show serialization:
-            stream.Position = 0;
-            Console.WriteLine(stream.ToXmlString());
-            Console.WriteLine();
-
             // Deserialize instance:
             stream.Position = 0;
             var b = (Amount)formatter.Deserialize(stream);
 
             // Compare:
-            Console.WriteLine(a);
-            Console.WriteLine(b);
             Assert.Equal(a, b);
         }
 
@@ -637,7 +568,6 @@ namespace RedStar.Amounts.Tests
             Assert.True(a.Unit.IsCompatibleTo(LengthUnits.Meter * TimeUnits.Second.Power(-2)));
             Assert.False(a.Unit.IsCompatibleTo(LengthUnits.Meter / TimeUnits.Second.Power(1)));
             Assert.False(a.Unit.IsCompatibleTo(MassUnits.Gram));
-            Console.WriteLine(a.Unit.UnitType.ToString());
         }
 
         [Fact]
@@ -647,9 +577,6 @@ namespace RedStar.Amounts.Tests
             var a = new Amount(1.0 / 5.0, TimeUnits.Day * 7.0);
 
             var result = a.Split(new[] { TimeUnits.Day, TimeUnits.Hour, TimeUnits.Minute, TimeUnits.Second }, 3);
-
-            foreach (var item in result)
-                Console.WriteLine(item);
 
             Assert.Equal(4, result.Length);
             Assert.Equal(new[] { 1.0, 9.0, 36.0, 0.0 }.ToList(), result.Select(x => x.Value).ToList());
@@ -662,9 +589,6 @@ namespace RedStar.Amounts.Tests
             var a = new Amount(7.0 / 5.0, TimeUnits.Day);
 
             var result = a.Split(new[] { TimeUnits.Day, TimeUnits.Hour, TimeUnits.Minute, TimeUnits.Second }, 3);
-
-            foreach (var item in result)
-                Console.WriteLine(item);
 
             // In this case, the split results in 1 day, 9 hours, 35 minutes and 60 SECONDS!
             // This is due to rounding; it results in ..., 35 minutes and 59.99999 seconds,
