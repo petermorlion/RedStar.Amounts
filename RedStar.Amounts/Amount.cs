@@ -380,6 +380,11 @@ namespace RedStar.Amounts
         /// </summary>
         public static bool operator <(Amount left, Amount right)
         {
+            if (left.Unit == right.Unit)
+            {
+                return (left != right) && (left._value < right._value);
+            }
+
             var rightConverted = right.ConvertedTo(left._unit);
             return (left != rightConverted) && (left._value < rightConverted._value);
         }
@@ -389,6 +394,11 @@ namespace RedStar.Amounts
         /// </summary>
         public static bool operator <=(Amount left, Amount right)
         {
+            if (left.Unit == right.Unit)
+            {
+                return (left == right) || (left._value < right._value);
+            }
+
             var rightConverted = right.ConvertedTo(left._unit);
             return (left == rightConverted) || (left._value < rightConverted._value);
         }
@@ -398,6 +408,11 @@ namespace RedStar.Amounts
         /// </summary>
         public static bool operator >(Amount left, Amount right)
         {
+            if (left.Unit == right.Unit)
+            {
+                return (left != right) && (left._value > right._value);
+            }
+
             var rightConverted = right.ConvertedTo(left._unit);
             return (left != rightConverted) && (left._value > rightConverted._value);
         }
@@ -407,6 +422,11 @@ namespace RedStar.Amounts
         /// </summary>
         public static bool operator >=(Amount left, Amount right)
         {
+            if (left.Unit == right.Unit)
+            {
+                return (left == right) || (left._value > right._value);
+            }
+
             var rightConverted = right.ConvertedTo(left._unit);
             return (left == rightConverted) || (left._value > rightConverted._value);
         }
