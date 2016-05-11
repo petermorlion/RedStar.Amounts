@@ -32,6 +32,8 @@ namespace RedStar.Amounts
             this.factor = factor;
             this.unitType = unitType;
             this.isNamed = isNamed;
+
+            this.symbol = SanitizeUnitString(this.symbol);
         }
 
         /// <summary>
@@ -196,6 +198,24 @@ namespace RedStar.Amounts
         }
 
         #endregion Public implementation
+
+        /// <summary>
+        /// Removes double * and / characters. These could be added after parsing.
+        /// </summary>
+        internal static string SanitizeUnitString(string s)
+        {
+            while (s.Contains("**"))
+            {
+                s = s.Replace("**", "*");
+            }
+
+            while (s.Contains("//"))
+            {
+                s = s.Replace("//", "/");
+            }
+
+            return s;
+        }
 
         #region Operator overloads
 
