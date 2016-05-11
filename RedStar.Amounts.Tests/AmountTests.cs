@@ -253,7 +253,7 @@ namespace RedStar.Amounts.Tests
 
             Amount a = null;
 
-            Assert.Equal("a = ", string.Format("a = {0:#,##0.0 US}", null));
+            Assert.Equal("a = ", string.Format("a = {0:#,##0.0 US}", a));
         }
 
         [Fact]
@@ -681,6 +681,44 @@ namespace RedStar.Amounts.Tests
             var a = new Amount(7.0 / 5.0, TimeUnits.Day);
 
             Assert.Throws<UnitConversionException>(() => a.Split(new[] { TimeUnits.Day, TimeUnits.Hour, LengthUnits.Meter, TimeUnits.Second }, 3));
+        }
+
+        [Fact]
+        public void Parsing01Test()
+        {
+            var defaultCultureInfo = Thread.CurrentThread.CurrentCulture;
+            try
+            {
+                Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
+
+                var nlbe = CultureInfo.GetCultureInfo("nl-BE");
+                var enus = CultureInfo.GetCultureInfo("en-US");
+
+                var a = new Amount(12.3456789, LengthUnits.KiloMeter);
+                var b = new Amount(12345.6789, LengthUnits.Meter);
+                var c = new Amount(-0.45, LengthUnits.KiloMeter / TimeUnits.Hour);
+                Assert.Equal(a, Amount.Parse("12.3456789 km"));
+                Assert.Equal(a, Amount.Parse("12,3456789 kilometer", nlbe));
+                Assert.Equal(b, Amount.Parse("12.345,6789 m", nlbe));
+                Assert.Equal(b, Amount.Parse("12,345.6789 m", enus));
+                Assert.Equal(c, Amount.Parse("-0.45 km/h", enus));
+                Assert.Equal(c, Amount.Parse("-0.45 (kilometer/hour)", enus));
+                Assert.Equal(c, Amount.Parse("-0,450 km/h", nlbe));
+                Assert.Equal(-b, Amount.Parse("12.3456789 km neg"));
+            }
+            finally
+            {
+                Thread.CurrentThread.CurrentCulture = defaultCultureInfo;
+            }
+        }
+
+        [Fact]
+        public void Parsing02Test()
+        {
+            var b = new Amount(1234.5678, LengthUnits.Meter);
+
+            Assert.Equal(null, Amount.Parse("", CultureInfo.InvariantCulture));
+            Assert.Equal(b, Amount.Parse("1,234.5678 meter", CultureInfo.InvariantCulture));
         }
     }
 }

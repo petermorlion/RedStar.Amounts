@@ -146,6 +146,41 @@ namespace RedStar.Amounts
             return amounts;
         }
 
+        public static Amount Parse(string value)
+        {
+            return Parse(value, null);
+        }
+
+        public static Amount Parse(string value, IFormatProvider formatProvider)
+        {
+            if (string.IsNullOrEmpty(value))
+                return null;
+
+            var spaceIndex = value.IndexOf(' ');
+            var valueString = value.Substring(0, spaceIndex);
+            var amountValue = double.Parse(valueString, formatProvider);
+            var unitString = value.Substring(spaceIndex + 1).TrimStart('(').TrimEnd(')');
+
+            var isNegative = false;
+            if (unitString.EndsWith(" neg"))
+            {
+                unitString = unitString.Remove(unitString.Length - 4);
+                isNegative = true;
+            }
+
+            Unit unit;
+            try
+            {
+                unit = UnitManager.GetUnitByName(unitString);
+            }
+            catch (UnknownUnitException)
+            {
+                unit = UnitManager.GetUnitBySymbol(unitString);
+            }
+
+            return new Amount(amountValue, unit) * (isNegative ? -1 : 1);
+        }
+
         public override bool Equals(object obj)
         {
             return (this == (obj as Amount));
