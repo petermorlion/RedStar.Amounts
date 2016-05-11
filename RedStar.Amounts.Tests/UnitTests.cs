@@ -24,6 +24,8 @@ namespace RedStar.Amounts.Tests
             Assert.Equal(MassUnits.KiloGram * 1000, Unit.Parse("1000*Kg"));
 
             Assert.Equal(VolumeUnits.Meter3 / TimeUnits.Hour, Unit.Parse("m³/h"));
+
+            Assert.Equal(TemperatureUnits.DegreeCelcius / TimeUnits.Second, Unit.Parse("1*°C/s"));
         }
 
         [Fact]
@@ -33,6 +35,9 @@ namespace RedStar.Amounts.Tests
 
             Assert.Equal(VolumeUnits.Meter3 / TimeUnits.Hour / LengthUnits.Meter, Unit.Parse("m³/h/m"));
             Assert.Equal(VolumeUnits.Meter3 / TimeUnits.Hour / LengthUnits.Meter * MassUnits.KiloGram, Unit.Parse("m³/h/m*Kg"));
+
+            Assert.Equal(TemperatureUnits.DegreeCelcius / TimeUnits.Second, Unit.Parse("1**°C/s"));
+            Assert.Equal(TemperatureUnits.DegreeCelcius / TimeUnits.Second, Unit.Parse("1***°C/s"));
         }
     }
 }

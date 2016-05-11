@@ -12,6 +12,15 @@ namespace RedStar.Amounts
                 return result;
 
             s = s.TrimStart('(').TrimEnd(')');
+            while (s.Contains("**"))
+            {
+                s = s.Replace("**", "*");
+            }
+
+            while (s.Contains("//"))
+            {
+                s = s.Replace("//", "/");
+            }
 
             var unitParts = new List<UnitPart>();
             var unitPartBuilder = new StringBuilder();
@@ -36,7 +45,7 @@ namespace RedStar.Amounts
                 return unitParts[0].AsUnit();
 
             double initialMultiplyer = 1;
-            for (int i = 0; i < unitParts.Count; i++)
+            for (var i = 0; i < unitParts.Count; i++)
             {
                 var unitPart = unitParts[i];
 
