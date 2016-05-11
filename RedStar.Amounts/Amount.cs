@@ -12,23 +12,23 @@ namespace RedStar.Amounts
         IFormattable,
         IUnitConsumer
     {
-        private static int equalityPrecision = 8;
+        private static int _equalityPrecision = 8;
 
-        private double value;
-        private Unit unit;
+        private double _value;
+        private readonly Unit _unit;
 
         #region Constructor methods
 
         public Amount(double value, Unit unit)
         {
-            this.value = value;
-            this.unit = unit;
+            _value = value;
+            _unit = unit;
         }
 
         public Amount(double value, string unitName)
         {
-            this.value = value;
-            this.unit = UnitManager.GetUnitByName(unitName);
+            _value = value;
+            _unit = UnitManager.GetUnitByName(unitName);
         }
 
         public static Amount Zero(Unit unit)
@@ -50,8 +50,8 @@ namespace RedStar.Amounts
         /// </summary>
         public static int EqualityPrecision
         {
-            get { return Amount.equalityPrecision; }
-            set { Amount.equalityPrecision = value; }
+            get { return Amount._equalityPrecision; }
+            set { Amount._equalityPrecision = value; }
         }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace RedStar.Amounts
         /// </summary>
         public double Value
         {
-            get { return this.value; }
+            get { return _value; }
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace RedStar.Amounts
         /// </summary>
         public Unit Unit
         {
-            get { return this.unit; }
+            get { return _unit; }
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace RedStar.Amounts
         /// </summary>
         public Unit AsUnit()
         {
-            return new Unit(this.value + "*" + this.unit.Name, this.value + "*" + this.unit.Symbol, this.Value * this.Unit);
+            return new Unit(_value + "*" + _unit.Name, _value + "*" + _unit.Symbol, Value * Unit);
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace RedStar.Amounts
         /// </summary>
         public Amount ConvertedTo(string unitName, int decimals)
         {
-            return this.ConvertedTo(UnitManager.GetUnitByName(unitName), decimals);
+            return ConvertedTo(UnitManager.GetUnitByName(unitName), decimals);
         }
 
         /// <summary>
@@ -110,7 +110,7 @@ namespace RedStar.Amounts
         /// </summary>
         public Amount ConvertedTo(string unitName)
         {
-            return this.ConvertedTo(UnitManager.GetUnitByName(unitName));
+            return ConvertedTo(UnitManager.GetUnitByName(unitName));
         }
 
         /// <summary>
@@ -129,14 +129,14 @@ namespace RedStar.Amounts
         /// </summary>
         public Amount[] Split(Unit[] units, int decimals)
         {
-            Amount[] amounts = new Amount[units.Length];
-            Amount rest = this;
+            var amounts = new Amount[units.Length];
+            var rest = this;
 
             // Truncate for all but the last unit:
-            for (int i = 0; i < (units.Length - 1); i++)
+            for (var i = 0; i < (units.Length - 1); i++)
             {
                 amounts[i] = (Amount)rest.ConvertedTo(units[i]).MemberwiseClone();
-                amounts[i].value = Math.Truncate(amounts[i].value);
+                amounts[i]._value = Math.Truncate(amounts[i]._value);
                 rest = rest - amounts[i];
             }
 
@@ -158,7 +158,7 @@ namespace RedStar.Amounts
 
         public override int GetHashCode()
         {
-            return this.value.GetHashCode() ^ this.unit.GetHashCode();
+            return _value.GetHashCode() ^ _unit.GetHashCode();
         }
 
         /// <summary>
@@ -166,15 +166,7 @@ namespace RedStar.Amounts
         /// </summary>
         public override string ToString()
         {
-            return this.ToString((string)null, (IFormatProvider)null);
-        }
-
-        /// <summary>
-        /// Shows a string representation of the amount, formatted according to the passed format string.
-        /// </summary>
-        public string ToString(string format)
-        {
-            return this.ToString(format, (IFormatProvider)null);
+            return ToString((string)null, null);
         }
 
         /// <summary>
@@ -182,7 +174,7 @@ namespace RedStar.Amounts
         /// </summary>
         public string ToString(IFormatProvider formatProvider)
         {
-            return this.ToString((string)null, formatProvider);
+            return ToString((string)null, formatProvider);
         }
 
         /// <summary>
@@ -196,21 +188,21 @@ namespace RedStar.Amounts
         /// UnitName or UnitSymbol) representing the unit (i.e. "#,##0.00 UL"). The format string can also
         /// contains a '|' followed by a unit to convert to.
         /// </remarks>
-        public string ToString(string format, IFormatProvider formatProvider)
+        public string ToString(string format, IFormatProvider formatProvider = null)
         {
             if (format == null) format = "GG";
 
             if (formatProvider != null)
             {
-                ICustomFormatter formatter = formatProvider.GetFormat(this.GetType()) as ICustomFormatter;
+                var formatter = formatProvider.GetFormat(GetType()) as ICustomFormatter;
                 if (formatter != null)
                 {
                     return formatter.Format(format, this, formatProvider);
                 }
             }
 
-            String[] formats = format.Split('|');
-            Amount amount = this;
+            var formats = format.Split('|');
+            var amount = this;
             if (formats.Length >= 2)
             {
                 if (formats[1] == "?")
@@ -274,7 +266,7 @@ namespace RedStar.Amounts
         /// </summary>
         public static string ToString(Amount amount, string format, IFormatProvider formatProvider)
         {
-            if (amount == null) return String.Empty;
+            if (amount == null) return string.Empty;
             else return amount.ToString(format, formatProvider);
         }
 
@@ -343,7 +335,7 @@ namespace RedStar.Amounts
         /// </summary>
         public Amount Power(int power)
         {
-            return new Amount(Math.Pow(this.value, power), this.unit.Power(power));
+            return new Amount(Math.Pow(_value, power), _unit.Power(power));
         }
 
         #endregion Mathematical operations
@@ -356,18 +348,18 @@ namespace RedStar.Amounts
         public static bool operator ==(Amount left, Amount right)
         {
             // Check references:
-            if (Object.ReferenceEquals(left, right))
+            if (ReferenceEquals(left, right))
                 return true;
-            else if (Object.ReferenceEquals(left, null))
+            else if (ReferenceEquals(left, null))
                 return false;
-            else if (Object.ReferenceEquals(right, null))
+            else if (ReferenceEquals(right, null))
                 return false;
 
             // Check value:
             try
             {
-                return Math.Round(left.value, Amount.equalityPrecision)
-                    == Math.Round(right.ConvertedTo(left.Unit).value, Amount.equalityPrecision);
+                return Math.Round(left._value, Amount._equalityPrecision)
+                    == Math.Round(right.ConvertedTo(left.Unit)._value, Amount._equalityPrecision);
             }
             catch (UnitConversionException)
             {
@@ -388,8 +380,8 @@ namespace RedStar.Amounts
         /// </summary>
         public static bool operator <(Amount left, Amount right)
         {
-            Amount rightConverted = right.ConvertedTo(left.unit);
-            return (left != rightConverted) && (left.value < rightConverted.value);
+            var rightConverted = right.ConvertedTo(left._unit);
+            return (left != rightConverted) && (left._value < rightConverted._value);
         }
 
         /// <summary>
@@ -397,8 +389,8 @@ namespace RedStar.Amounts
         /// </summary>
         public static bool operator <=(Amount left, Amount right)
         {
-            Amount rightConverted = right.ConvertedTo(left.unit);
-            return (left == rightConverted) || (left.value < rightConverted.value);
+            var rightConverted = right.ConvertedTo(left._unit);
+            return (left == rightConverted) || (left._value < rightConverted._value);
         }
 
         /// <summary>
@@ -406,8 +398,8 @@ namespace RedStar.Amounts
         /// </summary>
         public static bool operator >(Amount left, Amount right)
         {
-            Amount rightConverted = right.ConvertedTo(left.unit);
-            return (left != rightConverted) && (left.value > rightConverted.value);
+            var rightConverted = right.ConvertedTo(left._unit);
+            return (left != rightConverted) && (left._value > rightConverted._value);
         }
 
         /// <summary>
@@ -415,8 +407,8 @@ namespace RedStar.Amounts
         /// </summary>
         public static bool operator >=(Amount left, Amount right)
         {
-            Amount rightConverted = right.ConvertedTo(left.unit);
-            return (left == rightConverted) || (left.value > rightConverted.value);
+            var rightConverted = right.ConvertedTo(left._unit);
+            return (left == rightConverted) || (left._value > rightConverted._value);
         }
 
         /// <summary>
@@ -433,9 +425,9 @@ namespace RedStar.Amounts
         public static Amount operator +(Amount left, Amount right)
         {
             if ((left == null) && (right == null)) return null;
-            left = left ?? Zero((right != null) ? right.unit : Unit.None);
+            left = left ?? Zero((right != null) ? right._unit : Unit.None);
             right = right ?? Zero(left.Unit);
-            return new Amount(left.value + right.ConvertedTo(left.unit).value, left.unit);
+            return new Amount(left._value + right.ConvertedTo(left._unit)._value, left._unit);
         }
 
         /// <summary>
@@ -443,10 +435,10 @@ namespace RedStar.Amounts
         /// </summary>
         public static Amount operator -(Amount right)
         {
-            if (Object.ReferenceEquals(right, null))
+            if (ReferenceEquals(right, null))
                 return null;
             else
-                return new Amount(-right.value, right.unit);
+                return new Amount(-right._value, right._unit);
         }
 
         /// <summary>
@@ -462,12 +454,12 @@ namespace RedStar.Amounts
         /// </summary>
         public static Amount operator *(Amount left, Amount right)
         {
-            if (Object.ReferenceEquals(left, null))
+            if (ReferenceEquals(left, null))
                 return null;
-            else if (Object.ReferenceEquals(right, null))
+            else if (ReferenceEquals(right, null))
                 return null;
             else
-                return new Amount(left.value * right.value, left.unit * right.unit);
+                return new Amount(left._value * right._value, left._unit * right._unit);
         }
 
         /// <summary>
@@ -475,12 +467,12 @@ namespace RedStar.Amounts
         /// </summary>
         public static Amount operator /(Amount left, Amount right)
         {
-            if (Object.ReferenceEquals(left, null))
+            if (ReferenceEquals(left, null))
                 return null;
-            else if (Object.ReferenceEquals(right, null))
+            else if (ReferenceEquals(right, null))
                 return null;
             else
-                return new Amount(left.value / right.value, left.unit / right.unit);
+                return new Amount(left._value / right._value, left._unit / right._unit);
         }
 
         /// <summary>
@@ -488,10 +480,10 @@ namespace RedStar.Amounts
         /// </summary>
         public static Amount operator *(Amount left, double right)
         {
-            if (Object.ReferenceEquals(left, null))
+            if (ReferenceEquals(left, null))
                 return null;
             else
-                return new Amount(left.value * right, left.unit);
+                return new Amount(left._value * right, left._unit);
         }
 
         /// <summary>
@@ -499,10 +491,10 @@ namespace RedStar.Amounts
         /// </summary>
         public static Amount operator /(Amount left, double right)
         {
-            if (Object.ReferenceEquals(left, null))
+            if (ReferenceEquals(left, null))
                 return null;
             else
-                return new Amount(left.value / right, left.unit);
+                return new Amount(left._value / right, left._unit);
         }
 
         /// <summary>
@@ -510,10 +502,10 @@ namespace RedStar.Amounts
         /// </summary>
         public static Amount operator *(double left, Amount right)
         {
-            if (Object.ReferenceEquals(right, null))
+            if (ReferenceEquals(right, null))
                 return null;
             else
-                return new Amount(left * right.value, right.unit);
+                return new Amount(left * right._value, right._unit);
         }
 
         /// <summary>
@@ -521,10 +513,10 @@ namespace RedStar.Amounts
         /// </summary>
         public static Amount operator /(double left, Amount right)
         {
-            if (Object.ReferenceEquals(right, null))
+            if (ReferenceEquals(right, null))
                 return null;
             else
-                return new Amount(left / right.value, 1.0 / right.unit);
+                return new Amount(left / right._value, 1.0 / right._unit);
         }
 
         /// <summary>
@@ -617,7 +609,7 @@ namespace RedStar.Amounts
 
         string IConvertible.ToString(IFormatProvider provider)
         {
-            return this.ToString(provider);
+            return ToString(provider);
         }
 
         object IConvertible.ToType(Type conversionType, IFormatProvider provider)
@@ -680,7 +672,7 @@ namespace RedStar.Amounts
         /// </summary>
         int IComparable.CompareTo(object obj)
         {
-            Amount other = obj as Amount;
+            var other = obj as Amount;
             if (other == null) return +1;
             return ((IComparable<Amount>)this).CompareTo(other);
         }
