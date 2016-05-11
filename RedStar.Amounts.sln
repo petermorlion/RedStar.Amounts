@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedStar.Amounts", "RedStar.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedStar.Amounts.StandardUnits", "RedStar.Amounts.StandardUnits\RedStar.Amounts.StandardUnits.csproj", "{B3EEAF5A-75DC-4C91-8BDB-C3E9A01B9E98}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedStar.Amounts.Tests", "RedStar.Amounts.Tests\RedStar.Amounts.Tests.csproj", "{441C12B4-9E6B-4D63-9C9E-D7AA1E2FDF32}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{B3EEAF5A-75DC-4C91-8BDB-C3E9A01B9E98}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3EEAF5A-75DC-4C91-8BDB-C3E9A01B9E98}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B3EEAF5A-75DC-4C91-8BDB-C3E9A01B9E98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{441C12B4-9E6B-4D63-9C9E-D7AA1E2FDF32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{441C12B4-9E6B-4D63-9C9E-D7AA1E2FDF32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{441C12B4-9E6B-4D63-9C9E-D7AA1E2FDF32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{441C12B4-9E6B-4D63-9C9E-D7AA1E2FDF32}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
