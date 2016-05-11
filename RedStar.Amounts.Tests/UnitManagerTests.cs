@@ -29,5 +29,44 @@ namespace RedStar.Amounts.Tests
             var bySymbol = UnitManager.GetUnitBySymbol("SU");
             Assert.Equal(unit, bySymbol);
         }
+
+        [Fact]
+        public void TestGetUnitByNameForUnknownUnit()
+        {
+            UnknownUnitException thrownException = null;
+            try
+            {
+                UnitManager.GetUnitByName("bla");
+            }
+            catch (UnknownUnitException e)
+            {
+                thrownException = e;
+            }
+
+            Assert.NotNull(thrownException);
+        }
+
+        [Fact]
+        public void TestTryGetUnitByNameForUnknownUnit()
+        {
+            Unit unit;
+            var result = UnitManager.TryGetUnitByName("bla", out unit);
+
+            Assert.Null(unit);
+            Assert.False(result);
+        }
+
+        [Fact]
+        public void TestTryGetUnitByNameForKnownUnit()
+        {
+            var unit = new Unit("SomeUnit", "SU", Unit.None);
+            UnitManager.RegisterUnit(unit);
+
+            Unit retrievedUnit;
+            var result = UnitManager.TryGetUnitByName("SomeUnit", out retrievedUnit);
+
+            Assert.Equal(unit, retrievedUnit);
+            Assert.True(result);
+        }
     }
 }

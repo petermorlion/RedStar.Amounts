@@ -204,35 +204,50 @@ namespace RedStar.Amounts
         public static Unit GetUnitByName(string name)
         {
             Unit result = null;
-
-            // Try resolve unit by unitsByName:
-            Instance.unitsByName.TryGetValue(name, out result);
-
-            // Try resolve unit by UnitResolve event:
-            if (result == null)
-            {
-                if (Instance.UnitResolve != null)
-                {
-                    foreach (UnitResolveEventHandler handler in Instance.UnitResolve.GetInvocationList())
-                    {
-                        result = handler(Instance, new ResolveEventArgs(name));
-                        if (result != null)
-                        {
-                            RegisterUnit(result);
-                            break;
-                        }
-                    }
-                }
-            }
-
-            // Throw exception if unit resolution failed:
-            if (result == null)
+            if (!TryGetUnitByName(name, out result))
             {
                 throw new UnknownUnitException(String.Format("No unit found named '{0}'.", name));
             }
 
-            // Return result:
             return result;
+        }
+
+        /// <summary>
+        /// Retrieves the unit based on its name.
+        /// If the unit is not found, a UnitResolve event is fired as last chance
+        /// to resolve the unit.
+        /// If the unit cannot be resolved, null is returned.
+        /// </summary>
+        public static bool TryGetUnitByName(string name, out Unit unit)
+        {
+            // Try resolve unit by unitsByName:
+            Instance.unitsByName.TryGetValue(name, out unit);
+
+            // Try resolve unit by UnitResolve event:
+            if (unit != null)
+            {
+                return true;
+            }
+
+            if (Instance.UnitResolve == null)
+            {
+                return false;
+            }
+
+            foreach (UnitResolveEventHandler handler in Instance.UnitResolve.GetInvocationList())
+            {
+                unit = handler(Instance, new ResolveEventArgs(name));
+                if (unit == null)
+                {
+                    continue;
+                }
+
+                RegisterUnit(unit);
+                break;
+            }
+
+            // Return result:
+            return unit != null;
         }
 
         /// <summary>

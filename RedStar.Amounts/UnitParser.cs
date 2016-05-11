@@ -105,14 +105,13 @@ namespace RedStar.Amounts
 
             public Unit AsUnit()
             {
-                try
+                Unit result;
+                if (!UnitManager.TryGetUnitByName(_value, out result))
                 {
-                    return UnitManager.GetUnitByName(_value);
+                    result = UnitManager.GetUnitBySymbol(_value);
                 }
-                catch (UnknownUnitException)
-                {
-                    return UnitManager.GetUnitBySymbol(_value);
-                }
+
+                return result;
             }
 
             public UnitPartType UnitPartType { get; private set; }
