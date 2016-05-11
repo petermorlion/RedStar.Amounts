@@ -67,5 +67,18 @@ namespace RedStar.Amounts.Tests
             var zeroAmount = new Amount(0, LengthUnits.CentiMeter);
             Assert.Equal(new Amount(0, LengthUnits.CentiMeter), AmountMath.Abs(zeroAmount));
         }
+
+        [Fact]
+        public void TestAverage()
+        {
+            var amount1 = new Amount(10, TemperatureUnits.DegreeCelcius);
+            var amount2 = new Amount(20, TemperatureUnits.DegreeCelcius);
+            var amount3 = new Amount(25, TemperatureUnits.DegreeCelcius);
+            var amount4 = new Amount(18, TemperatureUnits.DegreeCelcius);
+
+            var list = new[] {amount1, amount2, amount3, amount4};
+
+            Assert.Equal(new Amount(18.25, TemperatureUnits.DegreeCelcius), list.Average());
+        }
     }
 }

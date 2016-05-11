@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="Amount.cs" />
     <Compile Include="AmountMath.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="IUnitConsumer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Unit.cs" />
