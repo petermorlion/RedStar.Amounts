@@ -249,11 +249,11 @@ namespace RedStar.Amounts.Tests
 
             Assert.Equal(
                 "Taking 2,5 h to travel 449 km means your speed was 179,54 km/h",
-                String.Format("Taking {1:GG|hour} to travel {0:#,##0 US|kilometer} means your speed was {2:#,##0.00 US|kilometer/hour}", d, t, s));
+                string.Format("Taking {1:GG|hour} to travel {0:#,##0 US|kilometer} means your speed was {2:#,##0.00 US|kilometer/hour}", d, t, s));
 
             Amount a = null;
 
-            Assert.Equal("a = ", String.Format("a = {0:#,##0.0 US}", null));
+            Assert.Equal("a = ", string.Format("a = {0:#,##0.0 US}", null));
         }
 
         [Fact]
