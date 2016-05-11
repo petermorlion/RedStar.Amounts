@@ -54,5 +54,18 @@ namespace RedStar.Amounts.Tests
             Assert.Equal(new Amount(14.02, LengthUnits.CentiMeter), AmountMath.Round(amount, 2));
             Assert.Equal(new Amount(14.016, LengthUnits.CentiMeter), AmountMath.Round(amount, 3));
         }
+
+        [Fact]
+        public void TestAbs()
+        {
+            var positiveAmount = new Amount(4.2, LengthUnits.CentiMeter);
+            Assert.Equal(new Amount(4.2, LengthUnits.CentiMeter), AmountMath.Abs(positiveAmount));
+
+            var negativeAmount = new Amount(-1.8, LengthUnits.CentiMeter);
+            Assert.Equal(new Amount(1.8, LengthUnits.CentiMeter), AmountMath.Abs(negativeAmount));
+
+            var zeroAmount = new Amount(0, LengthUnits.CentiMeter);
+            Assert.Equal(new Amount(0, LengthUnits.CentiMeter), AmountMath.Abs(zeroAmount));
+        }
     }
 }

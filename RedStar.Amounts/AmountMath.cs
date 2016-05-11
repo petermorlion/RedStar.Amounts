@@ -19,5 +19,10 @@ namespace RedStar.Amounts
             var roundedValue = Math.Round(amount.Value, digits);
             return new Amount(roundedValue, amount.Unit);
         }
+
+        public static Amount Abs(Amount amount)
+        {
+            return new Amount(Math.Abs(amount.Value), amount.Unit);
+        }
     }
 }
