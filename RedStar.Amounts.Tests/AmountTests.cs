@@ -13,24 +13,24 @@ namespace RedStar.Amounts.Tests
 {
     public class AmountTests : IDisposable
     {
-        private UnitManager defaultUnitManager;
+        private readonly UnitManager _defaultUnitManager;
 
         public AmountTests()
         {
-            this.defaultUnitManager = UnitManager.Instance;
+            _defaultUnitManager = UnitManager.Instance;
             UnitManager.Instance = new UnitManager();
             UnitManager.RegisterByAssembly(typeof(LengthUnits).Assembly);
         }
 
         public void Dispose()
         {
-            UnitManager.Instance = this.defaultUnitManager;
+            UnitManager.Instance = _defaultUnitManager;
         }
 
         [Fact]
         public void Construction01Test()
         {
-            Amount a = new Amount(100, "liter");
+            var a = new Amount(100, "liter");
             Assert.Equal(100.0, a.Value);
             Assert.Equal("liter", a.Unit.Name);
         }
@@ -38,9 +38,9 @@ namespace RedStar.Amounts.Tests
         [Fact]
         public void AdditionTest()
         {
-            Amount a = new Amount(3000.0, LengthUnits.Meter);
-            Amount sum = new Amount(2000.0, LengthUnits.Meter);
-            Amount expected = new Amount(5000.0, LengthUnits.Meter);
+            var a = new Amount(3000.0, LengthUnits.Meter);
+            var sum = new Amount(2000.0, LengthUnits.Meter);
+            var expected = new Amount(5000.0, LengthUnits.Meter);
 
             sum += a;
 
@@ -51,9 +51,9 @@ namespace RedStar.Amounts.Tests
         [Fact]
         public void AdditionDerivedTest()
         {
-            Amount a = new Amount(3000.0, LengthUnits.Meter);
-            Amount sum = new Amount(2.0, LengthUnits.KiloMeter);
-            Amount expected = new Amount(5.0, LengthUnits.KiloMeter);
+            var a = new Amount(3000.0, LengthUnits.Meter);
+            var sum = new Amount(2.0, LengthUnits.KiloMeter);
+            var expected = new Amount(5.0, LengthUnits.KiloMeter);
 
             sum += a;
 
@@ -64,9 +64,9 @@ namespace RedStar.Amounts.Tests
         [Fact]
         public void Conversion01Test()
         {
-            Amount speed = new Amount(120, LengthUnits.KiloMeter / TimeUnits.Hour);
-            Amount time = new Amount(15, TimeUnits.Minute);
-            Amount distance = (speed * time).ConvertedTo(LengthUnits.KiloMeter, 4);
+            var speed = new Amount(120, LengthUnits.KiloMeter / TimeUnits.Hour);
+            var time = new Amount(15, TimeUnits.Minute);
+            var distance = (speed * time).ConvertedTo(LengthUnits.KiloMeter, 4);
             Assert.Equal(30.0, distance.Value);
             Assert.Equal(LengthUnits.KiloMeter.Name, distance.Unit.Name);
         }
@@ -74,13 +74,13 @@ namespace RedStar.Amounts.Tests
         [Fact]
         public void Casting01Test()
         {
-            Amount a = (Amount)350.0;
+            var a = (Amount)350.0;
             Assert.Equal(new Amount(350.0, Unit.None), a);
 
-            Amount b = new Amount(123.0, Unit.None);
+            var b = new Amount(123.0, Unit.None);
             Assert.Equal(123.0, (double)b);
 
-            Amount c = new Amount(500.0, LengthUnits.Meter / LengthUnits.KiloMeter);
+            var c = new Amount(500.0, LengthUnits.Meter / LengthUnits.KiloMeter);
             Assert.Equal(0.5, (double)c);
 
             Assert.Equal("15.3", ((Amount)15.3).ToString().Replace(",", "."));
@@ -89,10 +89,10 @@ namespace RedStar.Amounts.Tests
         [Fact]
         public void Percentage01Test()
         {
-            Unit percent = new Unit("percent", "%", 0.01 * Unit.None);
+            var percent = new Unit("percent", "%", 0.01 * Unit.None);
 
-            Amount a = new Amount(15.0, percent);
-            Amount b = new Amount(300.0, TimeUnits.Minute);
+            var a = new Amount(15.0, percent);
+            var b = new Amount(300.0, TimeUnits.Minute);
 
             Assert.Equal("15 %", a.ToString("0 US"));
             Assert.Equal(0.15, (double)a);
@@ -103,12 +103,12 @@ namespace RedStar.Amounts.Tests
         [Fact]
         public void Percentage02Test()
         {
-            Unit percent = new Unit("percent", "%", 0.01 * Unit.None);
+            var percent = new Unit("percent", "%", 0.01 * Unit.None);
 
-            Amount a = new Amount(2.0, LengthUnits.Meter);
-            Amount b = new Amount(17.0, LengthUnits.CentiMeter);
+            var a = new Amount(2.0, LengthUnits.Meter);
+            var b = new Amount(17.0, LengthUnits.CentiMeter);
 
-            Amount p = (b / a).ConvertedTo(percent);
+            var p = (b / a).ConvertedTo(percent);
 
             Assert.Equal("8.50 %", p.ToString("0.00 US", CultureInfo.InvariantCulture));
             Assert.Equal(0.085, (double)p);
@@ -117,7 +117,7 @@ namespace RedStar.Amounts.Tests
         [Fact]
         public void Power01Test()
         {
-            Amount a = new Amount(12.0, LengthUnits.Meter);
+            var a = new Amount(12.0, LengthUnits.Meter);
 
             Assert.Equal(new Amount(1.0, Unit.None), a.Power(0));
 
@@ -133,16 +133,17 @@ namespace RedStar.Amounts.Tests
         [Fact]
         public void Split01Test()
         {
-            Amount a = new Amount(146.0, TimeUnits.Second);
-            Amount[] values = a.Split(new Unit[] { TimeUnits.Hour, TimeUnits.Minute, TimeUnits.Second }, 0);
+            var a = new Amount(146.0, TimeUnits.Second);
+            var values = a.Split(new[] { TimeUnits.Hour, TimeUnits.Minute, TimeUnits.Second }, 0);
 
-            string separator = "";
-            foreach (Amount v in values)
+            var separator = "";
+            foreach (var v in values)
             {
                 Console.Write(separator);
                 Console.Write(v);
                 separator = ", ";
             }
+
             Console.WriteLine();
 
             Assert.Equal(3, values.Length);
@@ -154,17 +155,16 @@ namespace RedStar.Amounts.Tests
         [Fact]
         public void Split02Test()
         {
-            Amount a = new Amount(10.5, LengthUnits.Meter);
-            Amount[] values = a.Split(new Unit[] { LengthUnits.Yard, LengthUnits.Foot, LengthUnits.Inch }, 1);
+            var a = new Amount(10.5, LengthUnits.Meter);
+            var values = a.Split(new[] { LengthUnits.Yard, LengthUnits.Foot, LengthUnits.Inch }, 1);
 
-            string separator = "";
-            foreach (Amount v in values)
+            var separator = "";
+            foreach (var v in values)
             {
                 Console.Write(separator);
                 Console.Write(v);
                 separator = ", ";
             }
-            Console.WriteLine();
 
             Assert.Equal(3, values.Length);
             Assert.Equal(new Amount(11.0, LengthUnits.Yard), values[0]);
@@ -175,17 +175,16 @@ namespace RedStar.Amounts.Tests
         [Fact]
         public void Split03Test()
         {
-            Amount a = new Amount(global::System.Math.Sqrt(13), LengthUnits.Meter);
-            Amount[] values = a.Split(new Unit[] { LengthUnits.Meter, LengthUnits.DeciMeter, LengthUnits.CentiMeter, LengthUnits.MilliMeter }, 0);
+            var a = new Amount(Math.Sqrt(13), LengthUnits.Meter);
+            var values = a.Split(new[] { LengthUnits.Meter, LengthUnits.DeciMeter, LengthUnits.CentiMeter, LengthUnits.MilliMeter }, 0);
 
-            string separator = "";
-            foreach (Amount v in values)
+            var separator = "";
+            foreach (var v in values)
             {
                 Console.Write(separator);
                 Console.Write(v);
                 separator = ", ";
             }
-            Console.WriteLine();
 
             Assert.Equal(new Amount(3.0, LengthUnits.Meter), values[0]);
             Assert.Equal(new Amount(6.0, LengthUnits.DeciMeter), values[1]);
@@ -196,18 +195,18 @@ namespace RedStar.Amounts.Tests
         [Fact]
         public void Formatting01Test()
         {
-            CultureInfo defaultCultureInfo = Thread.CurrentThread.CurrentCulture;
+            var defaultCultureInfo = Thread.CurrentThread.CurrentCulture;
             try
             {
                 Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
 
-                CultureInfo nlbe = CultureInfo.GetCultureInfo("nl-BE");
-                CultureInfo enus = CultureInfo.GetCultureInfo("en-US");
+                var nlbe = CultureInfo.GetCultureInfo("nl-BE");
+                var enus = CultureInfo.GetCultureInfo("en-US");
 
-                Amount a = new Amount(12.3456789, LengthUnits.KiloMeter);
-                Amount b = new Amount(12345.6789, LengthUnits.Meter);
-                Amount c = new Amount(-0.45, LengthUnits.KiloMeter / TimeUnits.Hour);
-                Amount d = new Amount(25.678, LengthUnits.Meter * LengthUnits.Meter);
+                var a = new Amount(12.3456789, LengthUnits.KiloMeter);
+                var b = new Amount(12345.6789, LengthUnits.Meter);
+                var c = new Amount(-0.45, LengthUnits.KiloMeter / TimeUnits.Hour);
+                var d = new Amount(25.678, LengthUnits.Meter * LengthUnits.Meter);
 
                 Assert.Equal("12.3456789 km", a.ToString());
                 Assert.Equal("12,3456789 kilometer", a.ToString("GN", nlbe));
@@ -234,7 +233,7 @@ namespace RedStar.Amounts.Tests
         [Fact]
         public void Formatting02Test()
         {
-            Amount b = new Amount(1234.5678, LengthUnits.Meter);
+            var b = new Amount(1234.5678, LengthUnits.Meter);
 
             Assert.Equal("", Amount.ToString(null, "#,##0.000 UN", CultureInfo.InvariantCulture));
             Assert.Equal("1,234.568 meter", Amount.ToString(b, "#,##0.000 UN", CultureInfo.InvariantCulture));
@@ -243,8 +242,8 @@ namespace RedStar.Amounts.Tests
         [Fact]
         public void Formatting03Test()
         {
-            Amount d = new Amount(278.9, LengthUnits.Mile);
-            Amount t = new Amount(2.5, TimeUnits.Hour);
+            var d = new Amount(278.9, LengthUnits.Mile);
+            var t = new Amount(2.5, TimeUnits.Hour);
 
             var s = d / t;
 
@@ -254,17 +253,17 @@ namespace RedStar.Amounts.Tests
 
             Amount a = null;
 
-            Assert.Equal("a = ", String.Format("a = {0:#,##0.0 US}", a));
+            Assert.Equal("a = ", String.Format("a = {0:#,##0.0 US}", null));
         }
 
         [Fact]
         public void StaticFormattingTest()
         {
-            Amount a = new Amount(1234.5678, LengthUnits.Meter);
+            var a = new Amount(1234.5678, LengthUnits.Meter);
             Amount b = null;
 
-            CultureInfo enus = CultureInfo.GetCultureInfo("en-US");
-            CultureInfo nlbe = CultureInfo.GetCultureInfo("nl-BE");
+            var enus = CultureInfo.GetCultureInfo("en-US");
+            var nlbe = CultureInfo.GetCultureInfo("nl-BE");
 
             Assert.Equal("1234.5678 m", Amount.ToString(a).Replace(",", "."));
             Assert.Equal("1234.5678 m", Amount.ToString(a, enus));
@@ -281,7 +280,7 @@ namespace RedStar.Amounts.Tests
             Assert.Equal("", Amount.ToString(b, "#,##0.00 US", nlbe));
 
             Amount x = null;
-            String s = "";
+            var s = "";
             s = s + Amount.ToString(x, "#,##0.00 US|meter");
 
         }
@@ -289,14 +288,14 @@ namespace RedStar.Amounts.Tests
         [Fact]
         public void SerializeDeserialize01Test()
         {
-            MemoryStream buffer = new MemoryStream();
+            var buffer = new MemoryStream();
 
             // Make some amounts:
-            Amount a1before = new Amount(12345.6789, LengthUnits.Meter);
-            Amount a2before = new Amount(-0.45, LengthUnits.KiloMeter / TimeUnits.Hour);
+            var a1before = new Amount(12345.6789, LengthUnits.Meter);
+            var a2before = new Amount(-0.45, LengthUnits.KiloMeter / TimeUnits.Hour);
 
             // Serialize the units:
-            BinaryFormatter f = new BinaryFormatter();
+            var f = new BinaryFormatter();
             f.Serialize(buffer, a1before);
             f.Serialize(buffer, a2before);
 
@@ -304,9 +303,9 @@ namespace RedStar.Amounts.Tests
             buffer.Seek(0, SeekOrigin.Begin);
 
             // Deserialize units:
-            BinaryFormatter g = new BinaryFormatter();
-            Amount a1after = (Amount)g.Deserialize(buffer);
-            Amount a2after = (Amount)g.Deserialize(buffer);
+            var g = new BinaryFormatter();
+            var a1after = (Amount)g.Deserialize(buffer);
+            var a2after = (Amount)g.Deserialize(buffer);
 
             buffer.Close();
 
@@ -321,7 +320,7 @@ namespace RedStar.Amounts.Tests
         public void NullAmountIsNotLessThanTest()
         {
             Amount a = null;
-            Amount b = (Amount)100.0;
+            var b = (Amount)100.0;
 
             Assert.Throws<NullReferenceException>(() => a < b);
         }
@@ -330,7 +329,7 @@ namespace RedStar.Amounts.Tests
         public void NullComparisonTest()
         {
             Amount a = null;
-            Amount b = (Amount)100.0;
+            var b = (Amount)100.0;
 
             int result = ((IComparable)b).CompareTo(a);
 
@@ -340,12 +339,10 @@ namespace RedStar.Amounts.Tests
         [Fact]
         public void AdditionWithNullTest()
         {
-            Amount a, b, sum;
-
             // Test both not null:
-            a = new Amount(100.0, LengthUnits.Meter);
-            b = new Amount(25.0, LengthUnits.Meter);
-            sum = a + b;
+            var a = new Amount(100.0, LengthUnits.Meter);
+            var b = new Amount(25.0, LengthUnits.Meter);
+            var sum = a + b;
             Assert.Equal(new Amount(125.0, LengthUnits.Meter), sum);
 
             // Test right not null:
@@ -370,12 +367,10 @@ namespace RedStar.Amounts.Tests
         [Fact]
         public void SubstractWithNullTest()
         {
-            Amount a, b, subs;
-
             // Test both not null:
-            a = new Amount(100.0, LengthUnits.Meter);
-            b = new Amount(25.0, LengthUnits.Meter);
-            subs = a - b;
+            var a = new Amount(100.0, LengthUnits.Meter);
+            var b = new Amount(25.0, LengthUnits.Meter);
+            var subs = a - b;
             Assert.Equal(new Amount(75.0, LengthUnits.Meter), subs);
 
             // Test right not null:
@@ -400,10 +395,10 @@ namespace RedStar.Amounts.Tests
         [Fact]
         public void RoundedComparisonTest()
         {
-            Amount a = new Amount(0.045, LengthUnits.Meter);
-            Amount b = new Amount(0.0450000000001, LengthUnits.Meter);
-            Amount c = new Amount(0.0450000000002, LengthUnits.Meter);
-            Amount d = new Amount(0.046, LengthUnits.Meter);
+            var a = new Amount(0.045, LengthUnits.Meter);
+            var b = new Amount(0.0450000000001, LengthUnits.Meter);
+            var c = new Amount(0.0450000000002, LengthUnits.Meter);
+            var d = new Amount(0.046, LengthUnits.Meter);
             Assert.False(a.Value == b.Value);
             Assert.False(b.Value == c.Value);
             Assert.False(a.Value == c.Value);
@@ -420,11 +415,11 @@ namespace RedStar.Amounts.Tests
         [Fact]
         public void Comparison01Test()
         {
-            Amount a = new Amount(-0.00002, EnergyUnits.HorsePower);
-            Amount b = new Amount(-0.00002, EnergyUnits.HorsePower);
+            var a = new Amount(-0.00002, EnergyUnits.HorsePower);
+            var b = new Amount(-0.00002, EnergyUnits.HorsePower);
 
-            Amount ar = a.ConvertedTo(EnergyUnits.Watt);
-            Amount br = b.ConvertedTo(EnergyUnits.Watt);
+            var ar = a.ConvertedTo(EnergyUnits.Watt);
+            var br = b.ConvertedTo(EnergyUnits.Watt);
 
             Assert.True(a == b);
             Assert.False(a > b);
@@ -437,8 +432,8 @@ namespace RedStar.Amounts.Tests
         [Fact]
         public void Comparison02Test()
         {
-            Amount a = new Amount(120.0, SpeedUnits.KilometerPerHour);
-            Amount b = new Amount(33.3333333330, SpeedUnits.MeterPerSecond);
+            var a = new Amount(120.0, SpeedUnits.KilometerPerHour);
+            var b = new Amount(33.3333333330, SpeedUnits.MeterPerSecond);
 
             Assert.True(a == b);
             Assert.False(a < b);
@@ -451,32 +446,32 @@ namespace RedStar.Amounts.Tests
         [Fact]
         public void DivisionByZeroTest()
         {
-            Amount d1 = new Amount(32.0, LengthUnits.KiloMeter);
-            Amount d2 = new Amount(0.0, LengthUnits.KiloMeter);
-            Amount t = new Amount(0.0, TimeUnits.Hour);
+            var d1 = new Amount(32.0, LengthUnits.KiloMeter);
+            var d2 = new Amount(0.0, LengthUnits.KiloMeter);
+            var t = new Amount(0.0, TimeUnits.Hour);
 
             Amount s;
 
             s = d1 / t;
 
-            Assert.True(Double.IsInfinity(s.Value));
-            Assert.True(Double.IsPositiveInfinity(s.Value));
+            Assert.True(double.IsInfinity(s.Value));
+            Assert.True(double.IsPositiveInfinity(s.Value));
             Assert.Equal(s.Unit, (d1.Unit / t.Unit));
 
             s = d2 / t;
 
-            Assert.True(Double.IsNaN(s.Value));
+            Assert.True(double.IsNaN(s.Value));
             Assert.Equal(s.Unit, (d2.Unit / t.Unit));
         }
 
         [Fact]
         public void AmountNetDataContractSerializerSerializationTest()
         {
-            Amount a = new Amount(3500.12, EnergyUnits.KiloWattHour * (365.0 * TimeUnits.Day) / VolumeUnits.Meter3);
+            var a = new Amount(3500.12, EnergyUnits.KiloWattHour * (365.0 * TimeUnits.Day) / VolumeUnits.Meter3);
 
             // Serialize instance:
-            MemoryStream stream = new MemoryStream();
-            NetDataContractSerializer serializer = new NetDataContractSerializer();
+            var stream = new MemoryStream();
+            var serializer = new NetDataContractSerializer();
             serializer.Serialize(stream, a);
 
             // Show serialization:
@@ -486,7 +481,7 @@ namespace RedStar.Amounts.Tests
 
             // Deserialize instance:
             stream.Position = 0;
-            Amount b = (Amount)serializer.Deserialize(stream);
+            var b = (Amount)serializer.Deserialize(stream);
 
             // Compare:
             Console.WriteLine(a);
@@ -497,7 +492,7 @@ namespace RedStar.Amounts.Tests
         [Fact]
         public void AmountArrayNetDataContractSerializerSerializationTest()
         {
-            Amount[] aa = new Amount[6];
+            var aa = new Amount[6];
             aa[0] = new Amount(32.5, LengthUnits.NauticalMile);
             aa[1] = new Amount(3500.12, EnergyUnits.KiloWattHour * (365.0 * TimeUnits.Day) / VolumeUnits.Meter3);
             aa[2] = 3 * aa[0];
@@ -506,8 +501,8 @@ namespace RedStar.Amounts.Tests
             aa[5] = new Amount(42.3, LengthUnits.Meter / TimeUnits.Second.Power(2));
 
             // Serialize instance:
-            MemoryStream stream = new MemoryStream();
-            NetDataContractSerializer serializer = new NetDataContractSerializer();
+            var stream = new MemoryStream();
+            var serializer = new NetDataContractSerializer();
             serializer.WriteObject(stream, aa);
 
             // Show serialization:
@@ -517,11 +512,11 @@ namespace RedStar.Amounts.Tests
 
             // Deserialize instance:
             stream.Position = 0;
-            Amount[] ba = (Amount[])serializer.ReadObject(stream);
+            var ba = (Amount[])serializer.ReadObject(stream);
 
             // Compare:
             Assert.Equal(aa.Length, ba.Length);
-            for (int i = 0; i < aa.Length; i++)
+            for (var i = 0; i < aa.Length; i++)
             {
                 Console.WriteLine(aa[i]);
                 Console.WriteLine(ba[i]);
@@ -532,11 +527,11 @@ namespace RedStar.Amounts.Tests
         [Fact]
         public void AmountDataContractSerializerSerializationTest()
         {
-            Amount a = new Amount(3500.12, EnergyUnits.KiloWattHour * (365.0 * TimeUnits.Day) / VolumeUnits.Meter3);
+            var a = new Amount(3500.12, EnergyUnits.KiloWattHour * (365.0 * TimeUnits.Day) / VolumeUnits.Meter3);
 
             // Serialize instance:
-            MemoryStream stream = new MemoryStream();
-            DataContractSerializer serializer = new DataContractSerializer(typeof(Amount));
+            var stream = new MemoryStream();
+            var serializer = new DataContractSerializer(typeof(Amount));
             serializer.WriteObject(stream, a);
 
             // Show serialization:
@@ -546,7 +541,7 @@ namespace RedStar.Amounts.Tests
 
             // Deserialize instance:
             stream.Position = 0;
-            Amount b = (Amount)serializer.ReadObject(stream);
+            var b = (Amount)serializer.ReadObject(stream);
 
             // Compare:
             Console.WriteLine(a);
@@ -557,7 +552,7 @@ namespace RedStar.Amounts.Tests
         [Fact]
         public void AmountArrayDataContractSerializerSerializationTest()
         {
-            Amount[] aa = new Amount[6];
+            var aa = new Amount[6];
             aa[0] = new Amount(32.5, LengthUnits.NauticalMile);
             aa[1] = new Amount(3500.12, EnergyUnits.KiloWattHour * (365.0 * TimeUnits.Day) / VolumeUnits.Meter3);
             aa[2] = 3 * aa[0];
@@ -566,8 +561,8 @@ namespace RedStar.Amounts.Tests
             aa[5] = new Amount(42.3, LengthUnits.Meter / TimeUnits.Second.Power(2));
 
             // Serialize instance:
-            MemoryStream stream = new MemoryStream();
-            DataContractSerializer serializer = new DataContractSerializer(typeof(Amount[]));
+            var stream = new MemoryStream();
+            var serializer = new DataContractSerializer(typeof(Amount[]));
             serializer.WriteObject(stream, aa);
 
             // Show serialization:
@@ -577,11 +572,11 @@ namespace RedStar.Amounts.Tests
 
             // Deserialize instance:
             stream.Position = 0;
-            Amount[] ba = (Amount[])serializer.ReadObject(stream);
+            var ba = (Amount[])serializer.ReadObject(stream);
 
             // Compare:
             Assert.Equal(aa.Length, ba.Length);
-            for (int i = 0; i < aa.Length; i++)
+            for (var i = 0; i < aa.Length; i++)
             {
                 Console.WriteLine(aa[i]);
                 Console.WriteLine(ba[i]);
@@ -592,16 +587,16 @@ namespace RedStar.Amounts.Tests
         [Fact]
         public void AmountBinaryFormatterSerializationTest()
         {
-            Amount a = new Amount(3500.12, EnergyUnits.KiloWattHour * (365.0 * TimeUnits.Day) / VolumeUnits.Meter3);
+            var a = new Amount(3500.12, EnergyUnits.KiloWattHour * (365.0 * TimeUnits.Day) / VolumeUnits.Meter3);
 
             // Serialize instance:
-            MemoryStream stream = new MemoryStream();
-            BinaryFormatter formatter = new BinaryFormatter();
+            var stream = new MemoryStream();
+            var formatter = new BinaryFormatter();
             formatter.Serialize(stream, a);
 
             // Deserialize instance:
             stream.Position = 0;
-            Amount b = (Amount)formatter.Deserialize(stream);
+            var b = (Amount)formatter.Deserialize(stream);
 
             // Compare:
             Console.WriteLine(a);
@@ -612,11 +607,11 @@ namespace RedStar.Amounts.Tests
         [Fact]
         public void AmountSoapFormatterSerializationTest()
         {
-            Amount a = new Amount(3500.12, EnergyUnits.KiloWattHour * (365.0 * TimeUnits.Day) / VolumeUnits.Meter3);
+            var a = new Amount(3500.12, EnergyUnits.KiloWattHour * (365.0 * TimeUnits.Day) / VolumeUnits.Meter3);
 
             // Serialize instance:
-            MemoryStream stream = new MemoryStream();
-            SoapFormatter formatter = new SoapFormatter();
+            var stream = new MemoryStream();
+            var formatter = new SoapFormatter();
             formatter.Serialize(stream, a);
 
             // Show serialization:
@@ -626,7 +621,7 @@ namespace RedStar.Amounts.Tests
 
             // Deserialize instance:
             stream.Position = 0;
-            Amount b = (Amount)formatter.Deserialize(stream);
+            var b = (Amount)formatter.Deserialize(stream);
 
             // Compare:
             Console.WriteLine(a);
@@ -637,7 +632,7 @@ namespace RedStar.Amounts.Tests
         [Fact]
         public void AmountCompatibilityTest()
         {
-            Amount a = new Amount(300, LengthUnits.Mile / TimeUnits.Hour.Power(2));
+            var a = new Amount(300, LengthUnits.Mile / TimeUnits.Hour.Power(2));
             Assert.True(a.Unit.IsCompatibleTo(LengthUnits.Meter / TimeUnits.Second.Power(2)));
             Assert.True(a.Unit.IsCompatibleTo(LengthUnits.Meter * TimeUnits.Second.Power(-2)));
             Assert.False(a.Unit.IsCompatibleTo(LengthUnits.Meter / TimeUnits.Second.Power(1)));
@@ -649,24 +644,24 @@ namespace RedStar.Amounts.Tests
         public void AmountSplitTest()
         {
             // One fifth of a week:
-            Amount a = new Amount(1.0 / 5.0, TimeUnits.Day * 7.0);
+            var a = new Amount(1.0 / 5.0, TimeUnits.Day * 7.0);
 
-            Amount[] result = a.Split(new Unit[] { TimeUnits.Day, TimeUnits.Hour, TimeUnits.Minute, TimeUnits.Second }, 3);
+            var result = a.Split(new[] { TimeUnits.Day, TimeUnits.Hour, TimeUnits.Minute, TimeUnits.Second }, 3);
 
             foreach (var item in result)
                 Console.WriteLine(item);
 
             Assert.Equal(4, result.Length);
-            Assert.Equal(new double[] { 1.0, 9.0, 36.0, 0.0 }.ToList(), result.Select(x => x.Value).ToList());
+            Assert.Equal(new[] { 1.0, 9.0, 36.0, 0.0 }.ToList(), result.Select(x => x.Value).ToList());
         }
 
         [Fact]
         public void AmountSplit2Test()
         {
             // One fifth of a week:
-            Amount a = new Amount(7.0 / 5.0, TimeUnits.Day);
+            var a = new Amount(7.0 / 5.0, TimeUnits.Day);
 
-            Amount[] result = a.Split(new Unit[] { TimeUnits.Day, TimeUnits.Hour, TimeUnits.Minute, TimeUnits.Second }, 3);
+            var result = a.Split(new[] { TimeUnits.Day, TimeUnits.Hour, TimeUnits.Minute, TimeUnits.Second }, 3);
 
             foreach (var item in result)
                 Console.WriteLine(item);
@@ -676,16 +671,16 @@ namespace RedStar.Amounts.Tests
             // which once rounded, end up to be 60 seconds...
 
             Assert.Equal(4, result.Length);
-            Assert.Equal(new double[] { 1.0, 9.0, 35.0, 60.0 }.ToList(), result.Select(x => x.Value).ToList());
+            Assert.Equal(new[] { 1.0, 9.0, 35.0, 60.0 }.ToList(), result.Select(x => x.Value).ToList());
         }
 
         [Fact]
         public void AmountSplitIncompatibleTest()
         {
             // One fifth of a week:
-            Amount a = new Amount(7.0 / 5.0, TimeUnits.Day);
+            var a = new Amount(7.0 / 5.0, TimeUnits.Day);
 
-            Assert.Throws<UnitConversionException>(() => a.Split(new Unit[] { TimeUnits.Day, TimeUnits.Hour, LengthUnits.Meter, TimeUnits.Second }, 3));
+            Assert.Throws<UnitConversionException>(() => a.Split(new[] { TimeUnits.Day, TimeUnits.Hour, LengthUnits.Meter, TimeUnits.Second }, 3));
         }
     }
 }
