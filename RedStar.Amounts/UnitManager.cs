@@ -28,16 +28,16 @@ namespace RedStar.Amounts
     {
         #region Fields
 
-        private static UnitManager instance;
+        private static UnitManager _instance;
 
         // Stores for named units:
-        private List<Unit> allUnits = new List<Unit>();
-        private Dictionary<UnitType, List<Unit>> unitsByType = new Dictionary<UnitType, List<Unit>>();
-        private Dictionary<string, Unit> unitsByName = new Dictionary<string, Unit>();
-        private Dictionary<string, Unit> unitsBySymbol = new Dictionary<string, Unit>();
+        private readonly List<Unit> _allUnits = new List<Unit>();
+        private readonly Dictionary<UnitType, List<Unit>> _unitsByType = new Dictionary<UnitType, List<Unit>>();
+        private readonly Dictionary<string, Unit> _unitsByName = new Dictionary<string, Unit>();
+        private readonly Dictionary<string, Unit> _unitsBySymbol = new Dictionary<string, Unit>();
 
         // Store for conversion functions:
-        private Dictionary<UnitConversionKeySlot, UnitConversionValueSlot> conversions = new Dictionary<UnitConversionKeySlot, UnitConversionValueSlot>();
+        private readonly Dictionary<UnitConversionKeySlot, UnitConversionValueSlot> _conversions = new Dictionary<UnitConversionKeySlot, UnitConversionValueSlot>();
 
         #endregion Fields
 
@@ -50,13 +50,13 @@ namespace RedStar.Amounts
         {
             get
             {
-                if (UnitManager.instance == null)
+                if (_instance == null)
                 {
-                    UnitManager.instance = new UnitManager();
+                    _instance = new UnitManager();
                 }
-                return UnitManager.instance;
+                return _instance;
             }
-            set { UnitManager.instance = value; }
+            set { _instance = value; }
         }
 
         #endregion Public properties
@@ -86,7 +86,7 @@ namespace RedStar.Amounts
         /// </remarks>
         public static void RegisterConversion(Unit fromUnit, Unit toUnit, ConversionFunction conversionFunction)
         {
-            Instance.conversions[new UnitConversionKeySlot(fromUnit, toUnit)] = new UnitConversionValueSlot(fromUnit, toUnit, conversionFunction);
+            Instance._conversions[new UnitConversionKeySlot(fromUnit, toUnit)] = new UnitConversionValueSlot(fromUnit, toUnit, conversionFunction);
         }
 
         /// <summary>
@@ -137,28 +137,28 @@ namespace RedStar.Amounts
             if (unit == null) throw new ArgumentNullException("unit");
 
             // Check if unit already registered:
-            foreach (var u in Instance.allUnits)
+            foreach (var u in Instance._allUnits)
             {
                 if (ReferenceEquals(u, unit)) return;
             }
 
             // Register unit in allUnits:
-            Instance.allUnits.Add(unit);
+            Instance._allUnits.Add(unit);
 
             // Register unit in unitsByType:
             try
             {
-                Instance.unitsByType[unit.UnitType].Add(unit);
+                Instance._unitsByType[unit.UnitType].Add(unit);
             }
             catch (KeyNotFoundException)
             {
-                Instance.unitsByType[unit.UnitType] = new List<Unit>();
-                Instance.unitsByType[unit.UnitType].Add(unit);
+                Instance._unitsByType[unit.UnitType] = new List<Unit>();
+                Instance._unitsByType[unit.UnitType].Add(unit);
             }
 
             // Register unit by name and symbol:
-            Instance.unitsByName[unit.Name] = unit;
-            Instance.unitsBySymbol[unit.Symbol] = unit;
+            Instance._unitsByName[unit.Name] = unit;
+            Instance._unitsBySymbol[unit.Symbol] = unit;
         }
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace RedStar.Amounts
         /// </summary>
         public static void RegisterUnits(Type unitDefinitionClass)
         {
-            foreach (FieldInfo field in unitDefinitionClass.GetFields(BindingFlags.GetField | BindingFlags.Public | BindingFlags.Static))
+            foreach (var field in unitDefinitionClass.GetFields(BindingFlags.GetField | BindingFlags.Public | BindingFlags.Static))
             {
                 if (field.FieldType == typeof(Unit))
                 {
@@ -182,7 +182,7 @@ namespace RedStar.Amounts
         /// </summary>
         public static void RegisterUnits(Assembly assembly)
         {
-            foreach (Type t in assembly.GetExportedTypes())
+            foreach (var t in assembly.GetExportedTypes())
             {
                 if (t.GetCustomAttributes(typeof(UnitDefinitionClassAttribute), false).Length > 0)
                 {
@@ -206,7 +206,7 @@ namespace RedStar.Amounts
             Unit result = null;
             if (!TryGetUnitByName(name, out result))
             {
-                throw new UnknownUnitException(String.Format("No unit found named '{0}'.", name));
+                throw new UnknownUnitException(string.Format("No unit found named '{0}'.", name));
             }
 
             return result;
@@ -221,7 +221,7 @@ namespace RedStar.Amounts
         public static bool TryGetUnitByName(string name, out Unit unit)
         {
             // Try resolve unit by unitsByName:
-            Instance.unitsByName.TryGetValue(name, out unit);
+            Instance._unitsByName.TryGetValue(name, out unit);
 
             // Try resolve unit by UnitResolve event:
             if (unit != null)
@@ -259,7 +259,7 @@ namespace RedStar.Amounts
             Unit result = null;
 
             // Try resolve unit by unitsBySymbol:
-            Instance.unitsBySymbol.TryGetValue(symbol, out result);
+            Instance._unitsBySymbol.TryGetValue(symbol, out result);
 
             // Throw exception if unit resolution failed:
             if (result == null)
@@ -276,7 +276,7 @@ namespace RedStar.Amounts
         /// </summary>
         public static ICollection<UnitType> GetUnitTypes()
         {
-            return Instance.unitsByType.Keys;
+            return Instance._unitsByType.Keys;
         }
 
         /// <summary>
@@ -284,7 +284,7 @@ namespace RedStar.Amounts
         /// </summary>
         public static IList<Unit> GetUnits()
         {
-            return Instance.allUnits;
+            return Instance._allUnits;
         }
 
         /// <summary>
@@ -292,7 +292,7 @@ namespace RedStar.Amounts
         /// </summary>
         public static bool IsRegistered(Unit unit)
         {
-            return (Instance.allUnits.Contains(unit));
+            return (Instance._allUnits.Contains(unit));
         }
 
         /// <summary>
@@ -300,7 +300,7 @@ namespace RedStar.Amounts
         /// </summary>
         public static IList<Unit> GetUnits(UnitType unitType)
         {
-            return Instance.unitsByType[unitType];
+            return Instance._unitsByType[unitType];
         }
 
         /// <summary>
@@ -319,9 +319,9 @@ namespace RedStar.Amounts
         {
             if (unit.IsNamed) return unit;
             double factor = unit.Factor;
-            if (Instance.unitsByType.ContainsKey(unit.UnitType))
+            if (Instance._unitsByType.ContainsKey(unit.UnitType))
             {
-                foreach (Unit m in Instance.unitsByType[unit.UnitType])
+                foreach (Unit m in Instance._unitsByType[unit.UnitType])
                 {
                     if (m.Factor == factor) return m;
                 }
@@ -354,7 +354,7 @@ namespace RedStar.Amounts
                 else
                 {
                     UnitConversionKeySlot expectedSlot = new UnitConversionKeySlot(amount.Unit, toUnit);
-                    return Instance.conversions[expectedSlot].Convert(amount).ConvertedTo(toUnit);
+                    return Instance._conversions[expectedSlot].Convert(amount).ConvertedTo(toUnit);
                 }
             }
             catch (KeyNotFoundException)
