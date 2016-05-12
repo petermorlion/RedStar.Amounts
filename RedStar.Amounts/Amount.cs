@@ -395,8 +395,7 @@ namespace RedStar.Amounts
             // Check value:
             try
             {
-                return Math.Round(left._value, Amount._equalityPrecision)
-                    == Math.Round(right.ConvertedTo(left.Unit)._value, Amount._equalityPrecision);
+                return Math.Round(left._value, _equalityPrecision) == Math.Round(right.ConvertedTo(left.Unit)._value, _equalityPrecision);
             }
             catch (UnitConversionException)
             {

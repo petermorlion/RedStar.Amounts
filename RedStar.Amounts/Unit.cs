@@ -5,13 +5,13 @@ namespace RedStar.Amounts
     [Serializable]
     public sealed class Unit : IComparable, IComparable<Unit>, IEquatable<Unit>, IFormattable
     {
-        private static Unit none = new Unit(String.Empty, String.Empty, UnitType.None);
+        private static readonly Unit _none = new Unit(string.Empty, string.Empty, UnitType.None);
 
-        private string name;
-        private string symbol;
-        private double factor;
-        private UnitType unitType;
-        private bool isNamed;
+        private readonly string _name;
+        private readonly string _symbol;
+        private readonly double _factor;
+        private readonly UnitType _unitType;
+        private readonly bool _isNamed;
 
         #region Constructor methods
 
@@ -21,19 +21,19 @@ namespace RedStar.Amounts
         }
 
         public Unit(string name, string symbol, Unit baseUnit)
-            : this(name, symbol, baseUnit.factor, baseUnit.unitType, true)
+            : this(name, symbol, baseUnit._factor, baseUnit._unitType, true)
         {
         }
 
         private Unit(string name, string symbol, double factor, UnitType unitType, bool isNamed)
         {
-            this.name = name;
-            this.symbol = symbol;
-            this.factor = factor;
-            this.unitType = unitType;
-            this.isNamed = isNamed;
+            _name = name;
+            _symbol = symbol;
+            _factor = factor;
+            _unitType = unitType;
+            _isNamed = isNamed;
 
-            this.symbol = SanitizeUnitString(this.symbol);
+            _symbol = SanitizeUnitString(_symbol);
         }
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace RedStar.Amounts
         /// </summary>
         public static Unit None
         {
-            get { return Unit.none; }
+            get { return _none; }
         }
 
         public static Unit Parse(string s)
@@ -58,7 +58,7 @@ namespace RedStar.Amounts
         /// </summary>
         public string Name
         {
-            get { return this.name; }
+            get { return _name; }
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace RedStar.Amounts
         /// </summary>
         public string Symbol
         {
-            get { return this.symbol; }
+            get { return _symbol; }
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace RedStar.Amounts
         /// </summary>
         public double Factor
         {
-            get { return this.factor; }
+            get { return _factor; }
         }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace RedStar.Amounts
         /// </summary>
         public bool IsNamed
         {
-            get { return this.isNamed; }
+            get { return _isNamed; }
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace RedStar.Amounts
         /// </summary>
         public UnitType UnitType
         {
-            get { return this.unitType; }
+            get { return _unitType; }
         }
 
         /// <summary>
@@ -100,7 +100,7 @@ namespace RedStar.Amounts
         /// <exception cref="UnitConversionException">Raised when units are not compatible.</exception>
         public void AssertCompatibility(Unit compatibleUnit)
         {
-            if (!this.IsCompatibleTo(compatibleUnit)) throw new UnitConversionException(this, compatibleUnit);
+            if (!IsCompatibleTo(compatibleUnit)) throw new UnitConversionException(this, compatibleUnit);
         }
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace RedStar.Amounts
         /// </summary>
         public bool IsCompatibleTo(Unit otherUnit)
         {
-            return (this.unitType == (otherUnit ?? Unit.none).unitType);
+            return (_unitType == (otherUnit ?? _none)._unitType);
         }
 
         /// <summary>
@@ -117,7 +117,7 @@ namespace RedStar.Amounts
         /// </summary>
         public Unit Power(int power)
         {
-            return new Unit(String.Concat('(', this.name, '^', power, ')'), this.symbol + '^' + power, (double)Math.Pow((double)this.factor, (double)power), this.unitType.Power(power), false);
+            return new Unit(String.Concat('(', _name, '^', power, ')'), _symbol + '^' + power, Math.Pow(_factor, power), _unitType.Power(power), false);
         }
 
         /// <summary>
@@ -141,7 +141,7 @@ namespace RedStar.Amounts
         /// </summary>
         public override int GetHashCode()
         {
-            return this.factor.GetHashCode() ^ this.unitType.GetHashCode();
+            return _factor.GetHashCode() ^ _unitType.GetHashCode();
         }
 
         /// <summary>
@@ -149,7 +149,7 @@ namespace RedStar.Amounts
         /// </summary>
         public override string ToString()
         {
-            return this.ToString(null, null);
+            return ToString(null, null);
         }
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace RedStar.Amounts
         /// </summary>
         public string ToString(string format)
         {
-            return this.ToString(format, null);
+            return ToString(format, null);
         }
 
         /// <summary>
@@ -165,7 +165,7 @@ namespace RedStar.Amounts
         /// </summary>
         public string ToString(IFormatProvider formatProvider)
         {
-            return this.ToString(null, formatProvider);
+            return ToString(null, formatProvider);
         }
 
         /// <summary>
@@ -180,7 +180,7 @@ namespace RedStar.Amounts
 
             if (formatProvider != null)
             {
-                ICustomFormatter formatter = formatProvider.GetFormat(this.GetType()) as ICustomFormatter;
+                ICustomFormatter formatter = formatProvider.GetFormat(GetType()) as ICustomFormatter;
                 if (formatter != null)
                 {
                     return formatter.Format(format, this, formatProvider);
@@ -190,10 +190,10 @@ namespace RedStar.Amounts
             switch (format)
             {
                 case "UN":
-                    return this.Name;
+                    return Name;
                 case "US":
                 default:
-                    return this.Symbol;
+                    return Symbol;
             }
         }
 
@@ -233,7 +233,7 @@ namespace RedStar.Amounts
             if ((object)right == null)
                 return false;
 
-            return (left.factor == right.factor) && (left.unitType == right.unitType);
+            return (left._factor == right._factor) && (left._unitType == right._unitType);
         }
 
         public static bool operator !=(Unit left, Unit right)
@@ -243,9 +243,9 @@ namespace RedStar.Amounts
 
         public static Unit operator *(Unit left, Unit right)
         {
-            left = left ?? Unit.none;
-            right = right ?? Unit.none;
-            return new Unit(String.Concat('(', left.name, '*', right.name, ')'), left.symbol + '*' + right.symbol, left.factor * right.factor, left.unitType * right.unitType, false);
+            left = left ?? _none;
+            right = right ?? _none;
+            return new Unit(string.Concat('(', left._name, '*', right._name, ')'), left._symbol + '*' + right._symbol, left._factor * right._factor, left._unitType * right._unitType, false);
         }
 
         public static Unit operator *(Unit left, double right)
@@ -255,27 +255,27 @@ namespace RedStar.Amounts
 
         public static Unit operator *(double left, Unit right)
         {
-            right = right ?? Unit.none;
-            return new Unit(String.Concat('(', left.ToString(), '*', right.name, ')'), left.ToString() + '*' + right.symbol, left * right.factor, right.unitType, false);
+            right = right ?? _none;
+            return new Unit(string.Concat('(', left.ToString(), '*', right._name, ')'), left.ToString() + '*' + right._symbol, left * right._factor, right._unitType, false);
         }
 
         public static Unit operator /(Unit left, Unit right)
         {
-            left = left ?? Unit.none;
-            right = right ?? Unit.none;
-            return new Unit(String.Concat('(', left.name, '/', right.name, ')'), left.symbol + '/' + right.symbol, left.factor / right.factor, left.unitType / right.unitType, false);
+            left = left ?? _none;
+            right = right ?? _none;
+            return new Unit(string.Concat('(', left._name, '/', right._name, ')'), left._symbol + '/' + right._symbol, left._factor / right._factor, left._unitType / right._unitType, false);
         }
 
         public static Unit operator /(double left, Unit right)
         {
-            right = right ?? Unit.none;
-            return new Unit(String.Concat('(', left.ToString(), '*', right.name, ')'), left.ToString() + '*' + right.symbol, left / right.factor, right.unitType.Power(-1), false);
+            right = right ?? _none;
+            return new Unit(string.Concat('(', left.ToString(), '*', right._name, ')'), left.ToString() + '*' + right._symbol, left / right._factor, right._unitType.Power(-1), false);
         }
 
         public static Unit operator /(Unit left, double right)
         {
-            left = left ?? Unit.none;
-            return new Unit(String.Concat('(', left.name, '/', right.ToString(), ')'), left.symbol + '/' + right.ToString(), left.factor / right, left.unitType, false);
+            left = left ?? _none;
+            return new Unit(string.Concat('(', left._name, '/', right.ToString(), ')'), left._symbol + '/' + right.ToString(), left._factor / right, left._unitType, false);
         }
 
         #endregion Operator overloads
@@ -297,9 +297,9 @@ namespace RedStar.Amounts
         /// <remarks>Only compatible units can be compared.</remarks>
         int IComparable<Unit>.CompareTo(Unit other)
         {
-            this.AssertCompatibility(other);
-            if (this.factor < other.factor) return -1;
-            else if (this.factor > other.factor) return +1;
+            AssertCompatibility(other);
+            if (_factor < other._factor) return -1;
+            else if (_factor > other._factor) return +1;
             else return 0;
         }
 
