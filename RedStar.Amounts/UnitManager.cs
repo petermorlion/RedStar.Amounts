@@ -137,28 +137,31 @@ namespace RedStar.Amounts
             if (unit == null) throw new ArgumentNullException("unit");
 
             // Check if unit already registered:
-            foreach (var u in Instance._allUnits)
+            lock (Instance._allUnits)
             {
-                if (ReferenceEquals(u, unit)) return;
-            }
+                foreach (var u in Instance._allUnits)
+                {
+                    if (ReferenceEquals(u, unit)) return;
+                }
 
-            // Register unit in allUnits:
-            Instance._allUnits.Add(unit);
+                // Register unit in allUnits:
+                Instance._allUnits.Add(unit);
 
-            // Register unit in unitsByType:
-            try
-            {
-                Instance._unitsByType[unit.UnitType].Add(unit);
-            }
-            catch (KeyNotFoundException)
-            {
-                Instance._unitsByType[unit.UnitType] = new List<Unit>();
-                Instance._unitsByType[unit.UnitType].Add(unit);
-            }
+                // Register unit in unitsByType:
+                try
+                {
+                    Instance._unitsByType[unit.UnitType].Add(unit);
+                }
+                catch (KeyNotFoundException)
+                {
+                    Instance._unitsByType[unit.UnitType] = new List<Unit>();
+                    Instance._unitsByType[unit.UnitType].Add(unit);
+                }
 
-            // Register unit by name and symbol:
-            Instance._unitsByName[unit.Name] = unit;
-            Instance._unitsBySymbol[unit.Symbol] = unit;
+                // Register unit by name and symbol:
+                Instance._unitsByName[unit.Name] = unit;
+                Instance._unitsBySymbol[unit.Symbol] = unit;
+            }
         }
 
         /// <summary>
@@ -264,7 +267,7 @@ namespace RedStar.Amounts
             // Throw exception if unit resolution failed:
             if (result == null)
             {
-                throw new UnknownUnitException(String.Format("No unit found with symbol '{0}'.", symbol));
+                throw new UnknownUnitException(string.Format("No unit found with symbol '{0}'.", symbol));
             }
 
             // Return result:

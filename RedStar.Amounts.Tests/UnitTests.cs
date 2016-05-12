@@ -1,23 +1,34 @@
-﻿using RedStar.Amounts.StandardUnits;
+﻿using System;
+using RedStar.Amounts.StandardUnits;
 using Xunit;
 
 namespace RedStar.Amounts.Tests
 {
-    public class UnitTests
+    public class UnitTests : IDisposable
     {
+        private readonly UnitManager _defaultUnitManager;
+
+        public UnitTests()
+        {
+            _defaultUnitManager = UnitManager.Instance;
+            UnitManager.Instance = new UnitManager();
+            UnitManager.RegisterByAssembly(typeof(LengthUnits).Assembly);
+        }
+
+        public void Dispose()
+        {
+            UnitManager.Instance = _defaultUnitManager;
+        }
+
         [Fact]
         public void UnitParseTestWithSimpleUnits()
         {
-            UnitManager.RegisterByAssembly(typeof(LengthUnits).Assembly);
-
             Assert.Equal(LengthUnits.Meter, Unit.Parse("m"));
         }
 
         [Fact]
         public void UnitParseTestWithCalculatedUnits()
         {
-            UnitManager.RegisterByAssembly(typeof(LengthUnits).Assembly);
-
             Assert.Equal(LengthUnits.Meter / TimeUnits.Second, Unit.Parse("m/s"));
             Assert.Equal(SpeedUnits.MeterPerSecond, Unit.Parse("m/s"));
 
@@ -31,8 +42,6 @@ namespace RedStar.Amounts.Tests
         [Fact]
         public void UnitParseTestWithSillyUnits()
         {
-            UnitManager.RegisterByAssembly(typeof(LengthUnits).Assembly);
-
             Assert.Equal(VolumeUnits.Meter3 / TimeUnits.Hour / LengthUnits.Meter, Unit.Parse("m³/h/m"));
             Assert.Equal(VolumeUnits.Meter3 / TimeUnits.Hour / LengthUnits.Meter * MassUnits.KiloGram, Unit.Parse("m³/h/m*Kg"));
 
