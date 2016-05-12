@@ -41,5 +41,5 @@ This makes it easier and more fail-proof to do calculations later.
 
 ## Source, license
 
-This code was taken and built upon from CodeProject](http://www.codeproject.com/Articles/611731/Working-with-Units-and-Amounts).
+This code was taken and built upon from [CodeProject](http://www.codeproject.com/Articles/611731/Working-with-Units-and-Amounts).
 Credit is due to Rudi Breedenraedt. The code is licensed under the CPOL.
