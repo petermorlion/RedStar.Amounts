@@ -22,5 +22,14 @@ namespace RedStar.Amounts
             var count = source.Count();
             return sum / count;
         }
+
+        /// <summary>
+        /// Limits a given Amount to be between the minimum and maximum provided. If the given Amount is lower than the minimum, the minimum will be returned.
+        /// If it is higher than the maximum, the maximum will be returned. If it is between the minimum and maximum, the value will be returned unchanged.
+        /// </summary>
+        public static Amount Limit(this Amount amount, Amount minimum, Amount maximum)
+        {
+            return AmountMath.Max(minimum, AmountMath.Min(amount, maximum));
+        }
     }
 }
