@@ -34,7 +34,7 @@ Or this:
         }
     }
 
-In the second example, the `area` variable, will automatically have a value and
+In the second example, the `area` variable will automatically have a value and
 a unit. The unit will be m².
 
 This makes it easier and more fail-proof to do calculations later.
