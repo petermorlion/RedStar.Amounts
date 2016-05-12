@@ -66,13 +66,27 @@ namespace RedStar.Amounts
                     {
                         i++;
                         var nextUnitPart = unitParts[i];
-                        result = result / nextUnitPart.AsUnit();
+                        if (nextUnitPart.UnitPartType == UnitPartType.Numeric)
+                        {
+                            result = result / nextUnitPart.AsDouble();
+                        }
+                        else
+                        {
+                            result = result / nextUnitPart.AsUnit();
+                        }
                     }
                     else if (unitPart.UnitPartType == UnitPartType.Multiplyer)
                     {
                         i++;
                         var nextUnitPart = unitParts[i];
-                        result = result * nextUnitPart.AsUnit();
+                        if (nextUnitPart.UnitPartType == UnitPartType.Numeric)
+                        {
+                            result = result * nextUnitPart.AsDouble();
+                        }
+                        else
+                        {
+                            result = result * nextUnitPart.AsUnit();
+                        }
                     }
                 }
             }
