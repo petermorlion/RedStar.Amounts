@@ -11,20 +11,11 @@ using Xunit;
 
 namespace RedStar.Amounts.Tests
 {
-    public class AmountTests : IDisposable
+    public class AmountTests
     {
-        private readonly UnitManager _defaultUnitManager;
-
         public AmountTests()
         {
-            _defaultUnitManager = UnitManager.Instance;
-            UnitManager.Instance = new UnitManager();
             UnitManager.RegisterByAssembly(typeof(LengthUnits).Assembly);
-        }
-
-        public void Dispose()
-        {
-            UnitManager.Instance = _defaultUnitManager;
         }
 
         [Fact]

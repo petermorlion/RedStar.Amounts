@@ -255,6 +255,11 @@ namespace RedStar.Amounts
 
         public static Unit operator *(double left, Unit right)
         {
+            if (left == 1)
+            {
+                return right;
+            }
+
             right = right ?? _none;
             return new Unit(string.Concat('(', left.ToString(), '*', right._name, ')'), left.ToString() + '*' + right._symbol, left * right._factor, right._unitType, false);
         }
