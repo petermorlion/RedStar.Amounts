@@ -39,6 +39,18 @@ a unit. The unit will be m².
 
 This makes it easier and more fail-proof to do calculations later.
 
+## Installation
+
+RedStar.Amounts consists of three Nuget packages:
+
+ - [RedStar.Amounts](https://www.nuget.org/packages/RedStar.Amounts/): the core library
+ - [RedStar.Amounts.StandardUnits](https://www.nuget.org/packages/RedStar.Amounts.StandardUnits/): most likely what you need, will include standard units (length, weight, energy, etc)
+ - [RedStar.Amounts.JsonNet](https://www.nuget.org/packages/RedStar.Amounts.JsonNet/): includes custom converters for JSON.NET
+
+## Documentation
+
+Documentation is currently hosted on [the wiki](https://github.com/petermorlion/RedStar.Amounts/wiki).
+
 ## Source, license
 
 This code was taken and built upon from [CodeProject](http://www.codeproject.com/Articles/611731/Working-with-Units-and-Amounts).
