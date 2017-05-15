@@ -51,6 +51,10 @@ RedStar.Amounts consists of three Nuget packages:
 
 Documentation is currently hosted on [the wiki](https://github.com/petermorlion/RedStar.Amounts/wiki).
 
+## .NET versions
+
+Currently, it is built for .NET 4.6.2, but I'm in the process of porting it to .NET Standard 1.3.
+
 ## Source, license
 
 This code was taken and built upon from [CodeProject](http://www.codeproject.com/Articles/611731/Working-with-Units-and-Amounts).
