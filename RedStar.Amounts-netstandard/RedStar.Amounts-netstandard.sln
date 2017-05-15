@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedStar.Amounts", "RedStar.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedStar.Amounts.StandardUnits", "RedStar.Amounts.StandardUnits\RedStar.Amounts.StandardUnits.csproj", "{CC652D7F-4BF6-42D6-A07E-4742567A28A5}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedStar.Amounts.Tests", "RedStar.Amounts.Tests\RedStar.Amounts.Tests.csproj", "{767AB07D-7C28-425E-9724-B3C825C08FC5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{CC652D7F-4BF6-42D6-A07E-4742567A28A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CC652D7F-4BF6-42D6-A07E-4742567A28A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CC652D7F-4BF6-42D6-A07E-4742567A28A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{767AB07D-7C28-425E-9724-B3C825C08FC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{767AB07D-7C28-425E-9724-B3C825C08FC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{767AB07D-7C28-425E-9724-B3C825C08FC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{767AB07D-7C28-425E-9724-B3C825C08FC5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
