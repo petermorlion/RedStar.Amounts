@@ -6,13 +6,7 @@ using System.Threading;
 
 namespace RedStar.Amounts
 {
-#if NET46
-    [Serializable]
-#endif
     public sealed class UnitType
-#if NET46
-        : ISerializable
-#endif
     {
         #region BaseUnitType support
 
@@ -72,9 +66,6 @@ namespace RedStar.Amounts
 
         private sbyte[] baseUnitIndices;
 
-#if NET46
-        [NonSerialized]
-#endif
         private int cachedHashCode;
 
 #region Constructor methods
@@ -97,33 +88,6 @@ namespace RedStar.Amounts
         {
             this.baseUnitIndices = (sbyte[])baseUnitIndices.Clone();
         }
-
-#if NET46
-        private UnitType(SerializationInfo info, StreamingContext c)
-        {
-            // Retrieve data from serialization:
-            sbyte[] tstoreexp = info.GetString("exps").Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries)
-                .Select(x => Convert.ToSByte(x))
-                .ToArray();
-            int[] tstoreind = info.GetString("names").Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries)
-                .Select(x => UnitType.GetBaseUnitIndex(x))
-                .ToArray();
-
-            // Construct instance:
-            if (tstoreexp.Length > 0)
-            {
-                this.baseUnitIndices = new sbyte[tstoreind.Max() + 1];
-                for (int i = 0; i < tstoreexp.Length; i++)
-                {
-                    this.baseUnitIndices[tstoreind[i]] = tstoreexp[i];
-                }
-            }
-            else
-            {
-                this.baseUnitIndices = new sbyte[0];
-            }
-        }
-#endif
 
         public static UnitType None
         {
@@ -245,32 +209,5 @@ namespace RedStar.Amounts
 
 #endregion Operator overloads
 
-#region ISerializable Members
-
-#if NET46
-        [SecurityPermissionAttribute(SecurityAction.LinkDemand, SerializationFormatter = true)]
-        void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            bool first = true;
-            StringBuilder sbn = new StringBuilder(this.baseUnitIndices.Length * 8);
-            StringBuilder sbx = new StringBuilder(this.baseUnitIndices.Length * 4);
-            for (int i = 0; i < this.baseUnitIndices.Length; i++)
-            {
-                if (this.baseUnitIndices[i] != 0)
-                {
-                    if (!first) sbn.Append('|');
-                    sbn.Append(UnitType.GetBaseUnitName(i));
-                    if (!first) sbx.Append('|');
-                    sbx.Append(this.baseUnitIndices[i]);
-                    first = false;
-                }
-            }
-            info.AddValue("names", sbn.ToString());
-            info.AddValue("exps", sbx.ToString());
-        }
-
-#endif
-
-#endregion
     }
 }

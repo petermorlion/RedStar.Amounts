@@ -2,9 +2,6 @@
 
 namespace RedStar.Amounts
 {
-#if NET46
-    [Serializable]
-#endif
     public sealed class Unit : IComparable, IComparable<Unit>, IEquatable<Unit>, IFormattable
     {
         private static readonly Unit _none = new Unit(string.Empty, string.Empty, UnitType.None);

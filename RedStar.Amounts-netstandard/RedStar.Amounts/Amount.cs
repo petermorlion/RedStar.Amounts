@@ -2,13 +2,7 @@
 
 namespace RedStar.Amounts
 {
-#if NET46
-    [Serializable]
-#endif
     public sealed class Amount :
-#if NET46
-        ICloneable,
-#endif
         IComparable,
         IComparable<Amount>,
         IConvertible,
