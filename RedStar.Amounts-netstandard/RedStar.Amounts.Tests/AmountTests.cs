@@ -245,34 +245,6 @@ namespace RedStar.Amounts.Tests
 
         }
 
-        //[Fact]
-        //public void SerializeDeserialize01Test()
-        //{
-        //    var buffer = new MemoryStream();
-
-        //    // Make some amounts:
-        //    var a1before = new Amount(12345.6789, LengthUnits.Meter);
-        //    var a2before = new Amount(-0.45, LengthUnits.KiloMeter / TimeUnits.Hour);
-
-        //    // Serialize the units:
-        //    var f = new BinaryFormatter();
-        //    f.Serialize(buffer, a1before);
-        //    f.Serialize(buffer, a2before);
-
-        //    // Reset stream:
-        //    buffer.Seek(0, SeekOrigin.Begin);
-
-        //    // Deserialize units:
-        //    var g = new BinaryFormatter();
-        //    var a1after = (Amount)g.Deserialize(buffer);
-        //    var a2after = (Amount)g.Deserialize(buffer);
-
-        //    buffer.Close();
-
-        //    Assert.Equal(a1before, a1after);
-        //    Assert.Equal(a2before, a2after);
-        //}
-
         [Fact]
         public void NullAmountIsNotLessThanTest()
         {
