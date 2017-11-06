@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Runtime.Serialization.Formatters.Soap;
 using System.Threading;
 using RedStar.Amounts.StandardUnits;
 using Xunit;
@@ -204,18 +203,29 @@ namespace RedStar.Amounts.Tests
         [Fact]
         public void Formatting03Test()
         {
-            var d = new Amount(278.9, LengthUnits.Mile);
-            var t = new Amount(2.5, TimeUnits.Hour);
+            var currentCulture = Thread.CurrentThread.CurrentCulture;
 
-            var s = d / t;
+            try
+            {
+                Thread.CurrentThread.CurrentCulture = new CultureInfo("en");
 
-            Assert.Equal(
-                "Taking 2,5 h to travel 449 km means your speed was 179,54 km/h",
-                string.Format("Taking {1:GG|hour} to travel {0:#,##0 US|kilometer} means your speed was {2:#,##0.00 US|kilometer/hour}", d, t, s));
+                var d = new Amount(278.9, LengthUnits.Mile);
+                var t = new Amount(2.5, TimeUnits.Hour);
 
-            Amount a = null;
+                var s = d / t;
 
-            Assert.Equal("a = ", string.Format("a = {0:#,##0.0 US}", a));
+                Assert.Equal(
+                    "Taking 2.5 h to travel 449 km means your speed was 179.54 km/h",
+                    string.Format("Taking {1:GG|hour} to travel {0:#,##0 US|kilometer} means your speed was {2:#,##0.00 US|kilometer/hour}", d, t, s));
+
+                Amount a = null;
+
+                Assert.Equal("a = ", string.Format("a = {0:#,##0.0 US}", a));
+            }
+            finally
+            {
+                Thread.CurrentThread.CurrentCulture = currentCulture;
+            }
         }
 
         [Fact]
@@ -442,34 +452,6 @@ namespace RedStar.Amounts.Tests
         }
 
         [Fact]
-        public void AmountArrayNetDataContractSerializerSerializationTest()
-        {
-            var aa = new Amount[6];
-            aa[0] = new Amount(32.5, LengthUnits.NauticalMile);
-            aa[1] = new Amount(3500.12, EnergyUnits.KiloWattHour * (365.0 * TimeUnits.Day) / VolumeUnits.Meter3);
-            aa[2] = 3 * aa[0];
-            aa[3] = 3 * aa[1];
-            aa[4] = aa[1] / aa[3];
-            aa[5] = new Amount(42.3, LengthUnits.Meter / TimeUnits.Second.Power(2));
-
-            // Serialize instance:
-            var stream = new MemoryStream();
-            var serializer = new DataContractSerializer(typeof(Amount));
-            serializer.WriteObject(stream, aa);
-
-            // Deserialize instance:
-            stream.Position = 0;
-            var ba = (Amount[])serializer.ReadObject(stream);
-
-            // Compare:
-            Assert.Equal(aa.Length, ba.Length);
-            for (var i = 0; i < aa.Length; i++)
-            {
-                Assert.Equal(aa[i], ba[i]);
-            }
-        }
-
-        [Fact]
         public void AmountDataContractSerializerSerializationTest()
         {
             var a = new Amount(3500.12, EnergyUnits.KiloWattHour * (365.0 * TimeUnits.Day) / VolumeUnits.Meter3);
@@ -523,24 +505,6 @@ namespace RedStar.Amounts.Tests
             // Serialize instance:
             var stream = new MemoryStream();
             var formatter = new BinaryFormatter();
-            formatter.Serialize(stream, a);
-
-            // Deserialize instance:
-            stream.Position = 0;
-            var b = (Amount)formatter.Deserialize(stream);
-
-            // Compare:
-            Assert.Equal(a, b);
-        }
-
-        [Fact]
-        public void AmountSoapFormatterSerializationTest()
-        {
-            var a = new Amount(3500.12, EnergyUnits.KiloWattHour * (365.0 * TimeUnits.Day) / VolumeUnits.Meter3);
-
-            // Serialize instance:
-            var stream = new MemoryStream();
-            var formatter = new SoapFormatter();
             formatter.Serialize(stream, a);
 
             // Deserialize instance:
