@@ -14,3 +14,5 @@ deploy:
   api_key:
     secure: ouLeNlwj6D5dKMVTC4osrDgDvHHOJJTJSLXKYhuy5qbjavXQ07afHo+Z3SFDkYua
   skip_symbols: false
+  on:
+    appveyor_repo_tag: true
