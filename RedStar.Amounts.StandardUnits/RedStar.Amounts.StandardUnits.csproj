@@ -2,8 +2,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <TargetFrameworks>netstandard2.0</TargetFrameworks>
+        <Version>2.0.0</Version>
+        <Authors>Peter Morlion</Authors>
+        <Company>Red Star IT</Company>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
     </PropertyGroup>
     <ItemGroup>
       <ProjectReference Include="..\RedStar.Amounts\RedStar.Amounts.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Properties\" />
     </ItemGroup>
 </Project>
