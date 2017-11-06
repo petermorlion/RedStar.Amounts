@@ -9,10 +9,14 @@ build:
   project: RedStar.Amounts.sln
   verbosity: minimal
 
+artifacts:
+ - path: '**\*.nupkg'
+
 deploy:
   provider: NuGet
   api_key:
     secure: ouLeNlwj6D5dKMVTC4osrDgDvHHOJJTJSLXKYhuy5qbjavXQ07afHo+Z3SFDkYua
   skip_symbols: false
+  artifact: /.*\.nupkg/
   on:
     appveyor_repo_tag: true
