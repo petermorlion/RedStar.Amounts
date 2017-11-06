@@ -6,6 +6,12 @@
         <Authors>Peter Morlion</Authors>
         <Company>Red Star IT</Company>
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <PackageLicenseUrl>https://github.com/petermorlion/RedStar.Amounts/blob/master/CPOL.md</PackageLicenseUrl>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+        <Title>RedStar Amounts Standard units</Title>
+        <Description>Standard units to use with the RedStar.Amounts package.</Description>
+        <PackageTags>units, amounts</PackageTags>
     </PropertyGroup>
     <ItemGroup>
       <ProjectReference Include="..\RedStar.Amounts\RedStar.Amounts.csproj" />
