@@ -12,7 +12,4 @@
     <ItemGroup>
       <ProjectReference Include="..\RedStar.Amounts\RedStar.Amounts.csproj" />
     </ItemGroup>
-    <ItemGroup>
-      <Folder Include="Properties\" />
-    </ItemGroup>
 </Project>
