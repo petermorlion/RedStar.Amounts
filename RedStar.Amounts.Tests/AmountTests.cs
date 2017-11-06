@@ -430,12 +430,12 @@ namespace RedStar.Amounts.Tests
 
             // Serialize instance:
             var stream = new MemoryStream();
-            var serializer = new NetDataContractSerializer();
-            serializer.Serialize(stream, a);
+            var serializer = new DataContractSerializer(typeof(Amount));
+            serializer.WriteObject(stream, a);
 
             // Deserialize instance:
             stream.Position = 0;
-            var b = (Amount)serializer.Deserialize(stream);
+            var b = (Amount)serializer.ReadObject(stream);
 
             // Compare:
             Assert.Equal(a, b);
@@ -454,7 +454,7 @@ namespace RedStar.Amounts.Tests
 
             // Serialize instance:
             var stream = new MemoryStream();
-            var serializer = new NetDataContractSerializer();
+            var serializer = new DataContractSerializer(typeof(Amount));
             serializer.WriteObject(stream, aa);
 
             // Deserialize instance:
