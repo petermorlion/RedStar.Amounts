@@ -55,7 +55,7 @@ Documentation is currently hosted on [the wiki](https://github.com/petermorlion/
 
 ## .NET versions
 
-Currently, it is built for .NET 4.6.2, but I'm in the process of porting it to .NET Standard 1.3.
+This library targets .NET Standard 2.0.
 
 ## Source, license
 
