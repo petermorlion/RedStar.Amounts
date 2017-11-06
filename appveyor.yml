@@ -1,0 +1,10 @@
+version: 1.0.{build}
+image: Visual Studio 2017
+configuration: Release
+
+before_build:
+- cmd: nuget restore
+
+build:
+  project: RedStar.Amounts.sln
+  verbosity: minimal
