@@ -11,5 +11,7 @@
         <Title>RedStar Amounts</Title>
         <Description>Easily work with units and amounts to reduce bugs, increase readability and improve interoperability.</Description>
         <PackageTags>units, amounts</PackageTags>
+        <PackageProjectUrl>https://github.com/petermorlion/RedStar.Amounts</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/petermorlion/RedStar.Amounts</RepositoryUrl>
     </PropertyGroup>
 </Project>

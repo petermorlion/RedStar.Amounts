@@ -12,6 +12,8 @@
         <Title>RedStar Amounts Standard units</Title>
         <Description>Standard units to use with the RedStar.Amounts package.</Description>
         <PackageTags>units, amounts</PackageTags>
+        <PackageProjectUrl>https://github.com/petermorlion/RedStar.Amounts</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/petermorlion/RedStar.Amounts</RepositoryUrl>
     </PropertyGroup>
     <ItemGroup>
       <ProjectReference Include="..\RedStar.Amounts\RedStar.Amounts.csproj" />

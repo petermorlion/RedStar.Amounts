@@ -11,6 +11,9 @@
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageTags>units, amounts, json</PackageTags>
+        <PackageProjectUrl>https://github.com/petermorlion/RedStar.Amounts</PackageProjectUrl>
+        <Copyright />
+        <RepositoryUrl>https://github.com/petermorlion/RedStar.Amounts</RepositoryUrl>
     </PropertyGroup>
     <ItemGroup>
       <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
