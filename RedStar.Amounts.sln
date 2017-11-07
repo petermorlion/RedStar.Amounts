@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2006
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedStar.Amounts", "RedStar.Amounts\RedStar.Amounts.csproj", "{961A7DCF-6242-41D5-A5B9-6195057C80D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedStar.Amounts", "RedStar.Amounts\RedStar.Amounts.csproj", "{961A7DCF-6242-41D5-A5B9-6195057C80D4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedStar.Amounts.StandardUnits", "RedStar.Amounts.StandardUnits\RedStar.Amounts.StandardUnits.csproj", "{B3EEAF5A-75DC-4C91-8BDB-C3E9A01B9E98}"
 EndProject
@@ -14,6 +14,17 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedStar.Amounts.JsonNet", "RedStar.Amounts.JsonNet\RedStar.Amounts.JsonNet.csproj", "{A05B6FC6-465F-408D-ADFA-4A5B14A572B2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedStar.Amounts.JsonNet.Tests", "RedStar.Amounts.JsonNet.Tests\RedStar.Amounts.JsonNet.Tests.csproj", "{ECC089C3-8167-4C25-8E9D-F76B1ED63799}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CA8ABDB5-C63A-4F44-BE3F-28D7145B550B}"
+	ProjectSection(SolutionItems) = preProject
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		appveyor.yml = appveyor.yml
+		CPOL.md = CPOL.md
+		LICENSE.md = LICENSE.md
+		MIT.md = MIT.md
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
