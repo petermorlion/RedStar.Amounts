@@ -615,5 +615,82 @@ namespace RedStar.Amounts.Tests
 
             Assert.Equal(new Amount(0, LengthUnits.Meter), amount);
         }
+
+        [Fact]
+        public void Add_ShouldAddGivenAmount()
+        {
+            var amount = new Amount(3, LengthUnits.Meter);
+
+            var result = amount.Add(new Amount(4, LengthUnits.Meter));
+
+            Assert.Equal(new Amount(7, LengthUnits.Meter), result);
+            Assert.NotSame(amount, result);
+        }
+
+        [Fact]
+        public void Negate_WithPositiveAmount_ShouldReturnEquivalentNegativeAmount()
+        {
+            var amount = new Amount(3, LengthUnits.Meter);
+
+            var result = amount.Negate();
+
+            Assert.Equal(new Amount(-3, LengthUnits.Meter), result);
+            Assert.NotSame(amount, result);
+        }
+
+        [Fact]
+        public void Negate_WithNegativeAmount_ShouldReturnEquivalentPositiveAmount()
+        {
+            var amount = new Amount(-3, LengthUnits.Meter);
+
+            var result = amount.Negate();
+
+            Assert.Equal(new Amount(3, LengthUnits.Meter), result);
+            Assert.NotSame(amount, result);
+        }
+
+        [Fact]
+        public void Multiply_ByAmount_ShouldReturnMultipliedValueWithNewUnit()
+        {
+            var amount = new Amount(3, LengthUnits.Meter);
+
+            var result = amount.Multiply(new Amount(4, LengthUnits.Meter));
+
+            Assert.Equal(new Amount(12, SurfaceUnits.Meter2), result);
+            Assert.NotSame(amount, result);
+        }
+
+        [Fact]
+        public void Multiply_ByDouble_ShouldReturnMultipliedValueWithSameUnit()
+        {
+            var amount = new Amount(3, LengthUnits.Meter);
+
+            var result = amount.Multiply(2);
+
+            Assert.Equal(new Amount(6, LengthUnits.Meter), result);
+            Assert.NotSame(amount, result);
+        }
+
+        [Fact]
+        public void DivideBy_Amount_ShouldReturnDividedValueWithNewUnit()
+        {
+            var amount = new Amount(12, SurfaceUnits.Meter2);
+
+            var result = amount.DivideBy(new Amount(4, LengthUnits.Meter));
+
+            Assert.Equal(new Amount(3, LengthUnits.Meter), result);
+            Assert.NotSame(amount, result);
+        }
+
+        [Fact]
+        public void DivideBy_Double_ShouldReturnDividedValueWithSameUnit()
+        {
+            var amount = new Amount(12, LengthUnits.Meter);
+
+            var result = amount.DivideBy(2);
+
+            Assert.Equal(new Amount(6, LengthUnits.Meter), result);
+            Assert.NotSame(amount, result);
+        }
     }
 }

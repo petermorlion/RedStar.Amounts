@@ -58,25 +58,19 @@ namespace RedStar.Amounts
         /// </summary>
         public static int EqualityPrecision
         {
-            get { return Amount._equalityPrecision; }
-            set { Amount._equalityPrecision = value; }
+            get => Amount._equalityPrecision;
+            set => Amount._equalityPrecision = value;
         }
 
         /// <summary>
         /// Gets the raw value of the amount.
         /// </summary>
-        public double Value
-        {
-            get { return _value; }
-        }
+        public double Value => _value;
 
         /// <summary>
         /// Gets the unit of the amount.
         /// </summary>
-        public Unit Unit
-        {
-            get { return _unit; }
-        }
+        public Unit Unit => _unit;
 
         /// <summary>
         /// Returns a unit that matches this amount.
@@ -141,7 +135,7 @@ namespace RedStar.Amounts
             var rest = this;
 
             // Truncate for all but the last unit:
-            for (var i = 0; i < (units.Length - 1); i++)
+            for (var i = 0; i < units.Length - 1; i++)
             {
                 amounts[i] = (Amount)rest.ConvertedTo(units[i]).MemberwiseClone();
                 amounts[i]._value = Math.Truncate(amounts[i]._value);
@@ -204,12 +198,12 @@ namespace RedStar.Amounts
 
         public override bool Equals(object obj)
         {
-            return (this == (obj as Amount));
+            return this == obj as Amount;
         }
 
         public bool Equals(Amount amount)
         {
-            return (this == amount);
+            return this == amount;
         }
 
         public override int GetHashCode()
@@ -322,8 +316,7 @@ namespace RedStar.Amounts
         /// </summary>
         public static string ToString(Amount amount, string format, IFormatProvider formatProvider)
         {
-            if (amount == null) return string.Empty;
-            else return amount.ToString(format, formatProvider);
+            return amount == null ? string.Empty : amount.ToString(format, formatProvider);
         }
 
         #endregion Public implementation
@@ -343,7 +336,7 @@ namespace RedStar.Amounts
         /// </summary>
         public Amount Negate()
         {
-            return (-this);
+            return -this;
         }
 
         /// <summary>
@@ -351,7 +344,7 @@ namespace RedStar.Amounts
         /// </summary>
         public Amount Multiply(Amount amount)
         {
-            return (this * amount);
+            return this * amount;
         }
 
         /// <summary>
@@ -359,7 +352,7 @@ namespace RedStar.Amounts
         /// </summary>
         public Amount Multiply(double value)
         {
-            return (this * value);
+            return this * value;
         }
 
         /// <summary>
@@ -367,7 +360,7 @@ namespace RedStar.Amounts
         /// </summary>
         public Amount DivideBy(Amount amount)
         {
-            return (this / amount);
+            return this / amount;
         }
 
         /// <summary>
@@ -375,7 +368,7 @@ namespace RedStar.Amounts
         /// </summary>
         public Amount DivideBy(double value)
         {
-            return (this / value);
+            return this / value;
         }
 
         /// <summary>
@@ -383,7 +376,7 @@ namespace RedStar.Amounts
         /// </summary>
         public Amount Inverse()
         {
-            return (1.0 / this);
+            return 1.0 / this;
         }
 
         /// <summary>
