@@ -607,5 +607,13 @@ namespace RedStar.Amounts.Tests
 
             Assert.Equal(b, Amount.Parse("0", CultureInfo.InvariantCulture));
         }
+
+        [Fact]
+        public void Zero_WithUnitName_ShouldReturnAmountWithZeroAndCorrectUnit()
+        {
+            var amount = Amount.Zero("meter");
+
+            Assert.Equal(new Amount(0, LengthUnits.Meter), amount);
+        }
     }
 }
