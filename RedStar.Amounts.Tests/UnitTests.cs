@@ -39,5 +39,11 @@ namespace RedStar.Amounts.Tests
             Assert.Equal(TemperatureUnits.DegreeCelcius / TimeUnits.Second, Unit.Parse("1**°C/s"));
             Assert.Equal(TemperatureUnits.DegreeCelcius / TimeUnits.Second, Unit.Parse("1***°C/s"));
         }
+
+        [Fact]
+        public void Parse_WithFullName_ShouldReturnCorrectUnit()
+        {
+            Assert.Equal(LengthUnits.Meter, Unit.Parse("meter"));
+        }
     }
 }

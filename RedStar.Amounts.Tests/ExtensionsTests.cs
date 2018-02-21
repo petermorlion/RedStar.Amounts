@@ -67,5 +67,17 @@ namespace RedStar.Amounts.Tests
             Assert.Equal(new Amount(60, TemperatureUnits.DegreeCelcius), tooHighAmount.Limit(minimum, maximum));
             Assert.Equal(new Amount(50, TemperatureUnits.DegreeCelcius), inBetweenAmount.Limit(minimum, maximum));
         }
+
+        [Fact]
+        public void Average_WithSelector_MustReturnCorrectAverage()
+        {
+            var object1 = new { Amount = new Amount(3, LengthUnits.Meter) };
+            var object2 = new { Amount = new Amount(14, LengthUnits.Meter) };
+            var list = new[] {object1, object2};
+
+            var result = list.Average(x => x.Amount);
+
+            Assert.Equal(new Amount(8.5, LengthUnits.Meter), result);
+        }
     }
 }

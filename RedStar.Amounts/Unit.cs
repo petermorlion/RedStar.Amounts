@@ -44,6 +44,12 @@ namespace RedStar.Amounts
             get { return _none; }
         }
 
+        /// <summary>
+        /// Converts the string representation of a unit to a Unit object. 
+        /// The string representation can be the name or the symbol of the unit.
+        /// </summary>
+        /// <param name="s">A string containing the name or the symbol of a unit to convert.</param>
+        /// <returns>A Unit object equivalent to the provided string.</returns>
         public static Unit Parse(string s)
         {
             return UnitParser.Parse(s);

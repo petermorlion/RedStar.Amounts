@@ -31,11 +31,19 @@ namespace RedStar.Amounts
             _unit = UnitManager.GetUnitByName(unitName);
         }
 
+        /// <summary>
+        /// Returns an Amount with value 0 for the given unit.
+        /// </summary>
+        /// <param name="unit">The unit</param>
         public static Amount Zero(Unit unit)
         {
             return new Amount(0.0, unit);
         }
 
+        /// <summary>
+        /// Returns an Amount with value 0 for the given unit name.
+        /// </summary>
+        /// <param name="unitName">The name of the unit</param>
         public static Amount Zero(string unitName)
         {
             return new Amount(0.0, unitName);
@@ -146,11 +154,22 @@ namespace RedStar.Amounts
             return amounts;
         }
 
+        /// <summary>
+        /// Converts the string representation of an amount to an Amount object.
+        /// </summary>
+        /// <param name="s">A string containing an amount to convert.</param>
+        /// <returns>An Amount object equivalent to the provided string.</returns>
         public static Amount Parse(string s)
         {
             return Parse(s, null);
         }
 
+        /// <summary>
+        /// Converts the string representation of an amount to an Amount object.
+        /// </summary>
+        /// <param name="s">A string containing an amount to convert.</param>
+        /// <param name="formatProvider">An object that supplies culture-specific formatting information about s.</param>
+        /// <returns>An Amount object equivalent to the provided string.</returns>
         public static Amount Parse(string s, IFormatProvider formatProvider)
         {
             if (string.IsNullOrEmpty(s))
