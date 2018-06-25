@@ -4,6 +4,8 @@
     public static class ElectricUnits
     {
         public static readonly Unit Ampere = new Unit("ampere", "amp", SIUnitTypes.ElectricCurrent);
+        public static readonly Unit MilliAmpere = new Unit("milliampere", "mamp", 0.001 * Ampere);
+
         public static readonly Unit Coulomb = new Unit("coulomb", "C", TimeUnits.Second * Ampere);
         public static readonly Unit Volt = new Unit("volt", "V", EnergyUnits.Watt / Ampere);
         public static readonly Unit Ohm = new Unit("ohm", "Ω", Volt / Ampere);

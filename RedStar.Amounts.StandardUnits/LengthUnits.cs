@@ -4,6 +4,9 @@ namespace RedStar.Amounts.StandardUnits
     public static class LengthUnits
     {
         public static readonly Unit Meter = new Unit("meter", "m", SIUnitTypes.Length);
+        public static readonly Unit PicoMeter = new Unit("picometer", "pm", 0.000000000001 * Meter);
+        public static readonly Unit NanoMeter = new Unit("nanometer", "nm", 0.000000001 * Meter);
+        public static readonly Unit MicroMeter = new Unit("micrometer", "µm", 0.000001 * Meter);
         public static readonly Unit MilliMeter = new Unit("millimeter", "mm", 0.001 * Meter);
         public static readonly Unit CentiMeter = new Unit("centimeter", "cm", 0.01 * Meter);
         public static readonly Unit DeciMeter = new Unit("decimeter", "dm", 0.1 * Meter);
