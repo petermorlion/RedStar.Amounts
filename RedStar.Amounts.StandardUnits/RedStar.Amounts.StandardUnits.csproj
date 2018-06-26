@@ -10,8 +10,8 @@
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <Title>RedStar Amounts Standard units</Title>
-        <Description>Standard units to use with the RedStar.Amounts package.</Description>
-        <PackageTags>units, amounts</PackageTags>
+        <Description>Standard units to use with the RedStar.Amounts package. These contain units that are part of the International System of Units (or SI, from the French Système Internationale).</Description>
+        <PackageTags>units, amounts, SI, système internationale, International System of Units</PackageTags>
         <PackageProjectUrl>https://github.com/petermorlion/RedStar.Amounts</PackageProjectUrl>
         <RepositoryUrl>https://github.com/petermorlion/RedStar.Amounts</RepositoryUrl>
         <FileVersion>3.0.1.0</FileVersion>
