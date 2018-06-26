@@ -2,10 +2,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <TargetFrameworks>netstandard2.0</TargetFrameworks>
-        <Version>2.0.0</Version>
+        <Version>3.0.1</Version>
         <Authors>Peter Morlion</Authors>
         <Company>Red Star IT</Company>
-        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>3.0.1.0</AssemblyVersion>
         <PackageLicenseUrl>https://github.com/petermorlion/RedStar.Amounts/blob/master/CPOL.md</PackageLicenseUrl>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
@@ -14,6 +14,7 @@
         <PackageTags>units, amounts</PackageTags>
         <PackageProjectUrl>https://github.com/petermorlion/RedStar.Amounts</PackageProjectUrl>
         <RepositoryUrl>https://github.com/petermorlion/RedStar.Amounts</RepositoryUrl>
+        <FileVersion>3.0.1.0</FileVersion>
     </PropertyGroup>
     <ItemGroup>
       <ProjectReference Include="..\RedStar.Amounts\RedStar.Amounts.csproj" />
