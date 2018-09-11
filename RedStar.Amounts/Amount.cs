@@ -492,9 +492,16 @@ namespace RedStar.Amounts
         /// </summary>
         public static Amount operator +(Amount left, Amount right)
         {
-            if ((left == null) && (right == null)) return null;
-            left = left ?? Zero((right != null) ? right._unit : Unit.None);
-            right = right ?? Zero(left.Unit);
+            if (ReferenceEquals(left, null))
+            {
+                return null;
+            }
+
+            if (ReferenceEquals(right, null))
+            {
+                return null;
+            }
+
             return new Amount(left._value + right.ConvertedTo(left._unit)._value, left._unit);
         }
 

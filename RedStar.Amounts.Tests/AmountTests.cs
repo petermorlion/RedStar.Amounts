@@ -26,7 +26,7 @@ namespace RedStar.Amounts.Tests
         }
 
         [Fact]
-        public void AddingAmounts_ShouldResultsInSum()
+        public void Add_ShouldResultsInSum()
         {
             var a = new Amount(3000.0, LengthUnits.Meter);
             var sum = new Amount(2000.0, LengthUnits.Meter);
@@ -38,7 +38,7 @@ namespace RedStar.Amounts.Tests
         }
 
         [Fact]
-        public void AddingAmountsWithDerivedUnits_ShouldResultInConvertedSum()
+        public void Add_WithDerivedUnits_ShouldResultInConvertedSum()
         {
             var a = new Amount(3000.0, LengthUnits.Meter);
             var sum = new Amount(2.0, LengthUnits.KiloMeter);
@@ -50,7 +50,7 @@ namespace RedStar.Amounts.Tests
         }
 
         [Fact]
-        public void ConvertingAnAmount_ShouldResultInAmountWithConvertedUnitAndCorrectValue()
+        public void Convert_ShouldResultInAmountWithConvertedUnitAndCorrectValue()
         {
             var speed = new Amount(120, LengthUnits.KiloMeter / TimeUnits.Hour);
             var time = new Amount(15, TimeUnits.Minute);
@@ -306,7 +306,7 @@ namespace RedStar.Amounts.Tests
         }
 
         [Fact]
-        public void AdditionWithNullTest()
+        public void Add_WithNull_ShouldResultInNull()
         {
             // Test both not null:
             var a = new Amount(100.0, LengthUnits.Meter);
@@ -318,23 +318,23 @@ namespace RedStar.Amounts.Tests
             a = new Amount(100.0, LengthUnits.Meter);
             b = null;
             sum = a + b;
-            Assert.Equal(new Amount(100.0, LengthUnits.Meter), sum);
+            Assert.Null(sum);
 
             // Test left not null:
             a = null;
             b = new Amount(25.0, LengthUnits.Meter);
             sum = a + b;
-            Assert.Equal(new Amount(25.0, LengthUnits.Meter), sum);
+            Assert.Null(sum);
 
             // Test both null:
             a = null;
             b = null;
             sum = a + b;
-            Assert.Equal(null, sum);
+            Assert.Null(sum);
         }
 
         [Fact]
-        public void SubstractWithNullTest()
+        public void Subtract_WithNull_ShouldResultInNull()
         {
             // Test both not null:
             var a = new Amount(100.0, LengthUnits.Meter);
@@ -346,19 +346,19 @@ namespace RedStar.Amounts.Tests
             a = new Amount(100.0, LengthUnits.Meter);
             b = null;
             subs = a - b;
-            Assert.Equal(new Amount(100.0, LengthUnits.Meter), subs);
+            Assert.Null(subs);
 
             // Test left not null:
             a = null;
             b = new Amount(25.0, LengthUnits.Meter);
             subs = a - b;
-            Assert.Equal(new Amount(-25.0, LengthUnits.Meter), subs);
+            Assert.Null(subs);
 
             // Test both null:
             a = null;
             b = null;
             subs = a - b;
-            Assert.Equal(null, subs);
+            Assert.Null(subs);
         }
 
         [Fact]
@@ -431,6 +431,15 @@ namespace RedStar.Amounts.Tests
 
             Assert.True(double.IsNaN(s.Value));
             Assert.Equal(s.Unit, (d2.Unit / t.Unit));
+        }
+
+        [Fact]
+        public void Divide_ByNull_ShouldReturnNull()
+        {
+            var a = new Amount(20, LengthUnits.Meter);
+
+            Assert.Null(a / null);
+            Assert.Null(null / a);
         }
 
         [Fact]
@@ -669,6 +678,15 @@ namespace RedStar.Amounts.Tests
 
             Assert.Equal(new Amount(6, LengthUnits.Meter), result);
             Assert.NotSame(amount, result);
+        }
+        
+        [Fact]
+        public void Multiply_ByNull_ShouldReturnNull()
+        {
+            var a = new Amount(20, LengthUnits.Meter);
+            
+            Assert.Null(a * null);
+            Assert.Null(null * a);
         }
 
         [Fact]
