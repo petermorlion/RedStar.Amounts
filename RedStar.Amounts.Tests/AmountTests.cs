@@ -18,7 +18,7 @@ namespace RedStar.Amounts.Tests
         }
 
         [Fact]
-        public void Construction01Test()
+        public void ConstructingAnAmount_ShouldStoreValueAndUnitName()
         {
             var a = new Amount(100, "liter");
             Assert.Equal(100.0, a.Value);
@@ -26,7 +26,7 @@ namespace RedStar.Amounts.Tests
         }
 
         [Fact]
-        public void AdditionTest()
+        public void AddingAmounts_ShouldResultsInSum()
         {
             var a = new Amount(3000.0, LengthUnits.Meter);
             var sum = new Amount(2000.0, LengthUnits.Meter);
@@ -38,7 +38,7 @@ namespace RedStar.Amounts.Tests
         }
 
         [Fact]
-        public void AdditionDerivedTest()
+        public void AddingAmountsWithDerivedUnits_ShouldResultInConvertedSum()
         {
             var a = new Amount(3000.0, LengthUnits.Meter);
             var sum = new Amount(2.0, LengthUnits.KiloMeter);
@@ -50,7 +50,7 @@ namespace RedStar.Amounts.Tests
         }
 
         [Fact]
-        public void Conversion01Test()
+        public void ConvertingAnAmount_ShouldResultInAmountWithConvertedUnitAndCorrectValue()
         {
             var speed = new Amount(120, LengthUnits.KiloMeter / TimeUnits.Hour);
             var time = new Amount(15, TimeUnits.Minute);
