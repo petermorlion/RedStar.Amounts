@@ -9,6 +9,6 @@ namespace RedStar.Amounts.StandardUnits
         public static readonly Unit DeciLiter = new Unit("deciliter", "dL", 0.1 * Liter);
         public static readonly Unit HectoLiter = new Unit("hectoliter", "hL", 100.0 * Liter);
 
-        public static readonly Unit Meter3 = new Unit("meter²", "m²", LengthUnits.Meter.Power(3));
+        public static readonly Unit Meter3 = new Unit("meter³", "m³", LengthUnits.Meter.Power(3));
     }
 }
