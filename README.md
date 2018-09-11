@@ -49,6 +49,8 @@ RedStar.Amounts consists of three Nuget packages:
  - [RedStar.Amounts.StandardUnits](https://www.nuget.org/packages/RedStar.Amounts.StandardUnits/): most likely what you need, will include standard units (length, weight, energy, etc)
  - [RedStar.Amounts.JsonNet](https://www.nuget.org/packages/RedStar.Amounts.JsonNet/): includes custom converters for JSON.NET
 
+Packages are released according to [https://semver.org](semantic versioning) and all latest versions should work together without any problems.
+
 ## Documentation
 
 Documentation is currently hosted on [the wiki](https://github.com/petermorlion/RedStar.Amounts/wiki).
