@@ -2,7 +2,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <TargetFrameworks>netstandard2.0</TargetFrameworks>
-        <Version>2.0.0</Version>
+        <Version>2.1.0</Version>
         <Authors>Peter Morlion</Authors>
         <Company>Red Star IT</Company>
         <PackageLicenseUrl>https://github.com/petermorlion/RedStar.Amounts/blob/master/MIT.md</PackageLicenseUrl>
@@ -14,8 +14,14 @@
         <PackageProjectUrl>https://github.com/petermorlion/RedStar.Amounts</PackageProjectUrl>
         <Copyright />
         <RepositoryUrl>https://github.com/petermorlion/RedStar.Amounts</RepositoryUrl>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
+        <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+        <FileVersion>2.1.0.0</FileVersion>
     </PropertyGroup>
     <ItemGroup>
+      <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta-63127-02" PrivateAssets="All" />
       <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
     </ItemGroup>
     <ItemGroup>

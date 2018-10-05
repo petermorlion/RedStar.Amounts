@@ -2,7 +2,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <TargetFrameworks>netstandard2.0</TargetFrameworks>
-        <Version>4.0.0</Version>
+        <Version>4.1.0</Version>
         <Authors>Peter Morlion</Authors>
         <Company>Red Star IT</Company>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -13,5 +13,13 @@
         <PackageTags>units, amounts</PackageTags>
         <PackageProjectUrl>https://github.com/petermorlion/RedStar.Amounts</PackageProjectUrl>
         <RepositoryUrl>https://github.com/petermorlion/RedStar.Amounts</RepositoryUrl>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
+        <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+        <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <FileVersion>4.1.0.0</FileVersion>
     </PropertyGroup>
+    <ItemGroup>
+      <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta-63127-02" PrivateAssets="All" />
+    </ItemGroup>
 </Project>
