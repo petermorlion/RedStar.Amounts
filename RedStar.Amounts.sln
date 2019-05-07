@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27004.2006
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.352
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedStar.Amounts", "RedStar.Amounts\RedStar.Amounts.csproj", "{961A7DCF-6242-41D5-A5B9-6195057C80D4}"
 EndProject
@@ -62,5 +62,8 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {06747729-D7C9-46D4-ADF6-20D4C882EED8}
+	EndGlobalSection
+	GlobalSection(NDepend) = preSolution
+		Project = ".\RedStar.Amounts.ndproj"
 	EndGlobalSection
 EndGlobal
