@@ -8,7 +8,7 @@ namespace RedStar.Amounts
     /// </summary>
     /// <see cref="UnitManager.RegisterUnits(System.Reflection.Assembly)"/>
     [AttributeUsage(AttributeTargets.Class)]
-    public class UnitDefinitionClassAttribute : Attribute
+    public sealed class UnitDefinitionClassAttribute : Attribute
     {
     }
 }

@@ -377,7 +377,7 @@ namespace RedStar.Amounts
         {
             private UnitType fromType, toType;
 
-            public UnitConversionKeySlot(Unit from, Unit to)
+            internal UnitConversionKeySlot(Unit from, Unit to)
             {
                 this.fromType = from.UnitType;
                 this.toType = to.UnitType;
@@ -403,14 +403,14 @@ namespace RedStar.Amounts
             private Unit from, to;
             private ConversionFunction conversionFunction;
 
-            public UnitConversionValueSlot(Unit from, Unit to, ConversionFunction conversionFunction)
+            internal UnitConversionValueSlot(Unit from, Unit to, ConversionFunction conversionFunction)
             {
                 this.from = from;
                 this.to = to;
                 this.conversionFunction = conversionFunction;
             }
 
-            public Amount Convert(Amount amount)
+            internal Amount Convert(Amount amount)
             {
                 return this.conversionFunction(amount.ConvertedTo(from));
             }

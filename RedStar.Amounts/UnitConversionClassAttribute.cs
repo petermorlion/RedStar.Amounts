@@ -10,7 +10,7 @@ namespace RedStar.Amounts
     /// </summary>
     /// <see cref="UnitManager.RegisterConversions(System.Reflection.Assembly)"/>
     [AttributeUsage(AttributeTargets.Class)]
-    public class UnitConversionClassAttribute : Attribute
+    public sealed class UnitConversionClassAttribute : Attribute
     {
     }
 }

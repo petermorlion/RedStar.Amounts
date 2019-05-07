@@ -17,7 +17,7 @@ namespace RedStar.Amounts.JsonNet
             writer.WritePropertyName("value");
             writer.WriteValue(amount.Value);
             writer.WritePropertyName("unit");
-            writer.WriteRawValue(string.Format("\"{0}\"", amount.Unit.ToString(serializer.Culture)));
+            writer.WriteRawValue($"\"{amount.Unit.ToString(serializer.Culture)}\"");
             writer.WriteEndObject();
         }
 
@@ -44,14 +44,14 @@ namespace RedStar.Amounts.JsonNet
             }
         }
 
-        private string GetTokenValue(JsonReader reader, string expectedPropertyName)
+        private static string GetTokenValue(JsonReader reader, string expectedPropertyName)
         {
             reader.Read();
             var propertyName = reader.Value != null ? reader.Value.ToString() : "";
 
             if (propertyName != expectedPropertyName)
             {
-                throw new SerializationException(string.Format("Expected token '{0}', but found '{1}'.", expectedPropertyName, propertyName));
+                throw new SerializationException($"Expected token '{expectedPropertyName}', but found '{propertyName}'.");
             }
 
             return reader.ReadAsString();

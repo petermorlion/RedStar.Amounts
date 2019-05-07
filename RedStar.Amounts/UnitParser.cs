@@ -98,7 +98,7 @@ namespace RedStar.Amounts
         {
             private readonly string _value;
 
-            public UnitPart(string s)
+            internal UnitPart(string s)
             {
                 _value = s;
 
@@ -121,12 +121,12 @@ namespace RedStar.Amounts
                 }
             }
 
-            public double AsDouble()
+            internal double AsDouble()
             {
                 return UnitPartType == UnitPartType.Numeric ? double.Parse(_value) : 1;
             }
 
-            public Unit AsUnit()
+            internal Unit AsUnit()
             {
                 Unit result;
                 if (!UnitManager.TryGetUnitByName(_value, out result))
@@ -137,7 +137,7 @@ namespace RedStar.Amounts
                 return result;
             }
 
-            public UnitPartType UnitPartType { get; private set; }
+            internal UnitPartType UnitPartType { get; }
         }
 
         private enum UnitPartType

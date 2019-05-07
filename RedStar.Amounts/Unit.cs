@@ -208,7 +208,7 @@ namespace RedStar.Amounts
         /// <summary>
         /// Removes double * and / characters. These could be added after parsing.
         /// </summary>
-        internal static string SanitizeUnitString(string s)
+        private static string SanitizeUnitString(string s)
         {
             while (s.Contains("**"))
             {
