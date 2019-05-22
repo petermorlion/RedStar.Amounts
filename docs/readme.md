@@ -29,10 +29,8 @@ Usually, you would do this on startup of your application. This registers all un
 
 After the UnitManager knows all the units to use, you can start working with amounts. 
 
-Next: [The Basics](./basics.md)
-
-Or:
-
+More docs:
+ - [The Basics](./basics.md)
  - There are some interesting [helper methods](./helper-methods.md). 
  - Read more on using [composite units](./composite-units.md) 
  - You can [register your own units](./registering-your-own-units.md).
