@@ -2,7 +2,7 @@
 
 [![Build status](https://ci.appveyor.com/api/projects/status/swyqov7lwwv52cg3?svg=true)](https://ci.appveyor.com/project/petermorlion/redstar-amounts)
 
-This library contains classes to easily work with unit and amounts.
+RedStar.Amounts contains classes to easily work with unit and amounts.
 
 Too often, applications use integers, doubles, etc. to indicate distances,
 weights, and other measured values. This can cause problems because assumptions
