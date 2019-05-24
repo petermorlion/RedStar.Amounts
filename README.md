@@ -53,7 +53,7 @@ Packages are released according to [semantic versioning](https://semver.org) and
 
 ## Documentation
 
-Documentation is currently hosted on [the wiki](https://github.com/petermorlion/RedStar.Amounts/wiki).
+You can find the latest documentation [here](https://petermorlion.github.io/RedStar.Amounts/).
 
 ## .NET versions
 
