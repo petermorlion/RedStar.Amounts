@@ -605,7 +605,7 @@ namespace RedStar.Amounts.Tests
         {
             var b = new Amount(1234.5678, LengthUnits.Meter);
 
-            Assert.Equal(null, Amount.Parse("", CultureInfo.InvariantCulture));
+            Assert.Null(Amount.Parse("", CultureInfo.InvariantCulture));
             Assert.Equal(b, Amount.Parse("1,234.5678 meter", CultureInfo.InvariantCulture));
         }
 
