@@ -9,6 +9,11 @@ build:
   project: RedStar.Amounts.sln
   verbosity: minimal
 
+test:
+  assemblies:
+    only:
+      - '**\*.Tests.dll'
+
 artifacts:
  - path: '**\*.nupkg'
 
