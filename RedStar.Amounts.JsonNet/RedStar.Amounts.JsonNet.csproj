@@ -2,7 +2,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <TargetFrameworks>netstandard2.0</TargetFrameworks>
-        <Version>2.1.0</Version>
+        <Version>3.0.0</Version>
         <Authors>Peter Morlion</Authors>
         <Company>Red Star IT</Company>
         <PackageLicenseUrl>https://github.com/petermorlion/RedStar.Amounts/blob/master/MIT.md</PackageLicenseUrl>

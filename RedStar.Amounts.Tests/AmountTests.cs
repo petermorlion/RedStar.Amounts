@@ -160,6 +160,7 @@ namespace RedStar.Amounts.Tests
             try
             {
                 Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
+                Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
 
                 var nlbe = CultureInfo.GetCultureInfo("nl-BE");
                 var enus = CultureInfo.GetCultureInfo("en-US");
@@ -188,6 +189,7 @@ namespace RedStar.Amounts.Tests
             finally
             {
                 Thread.CurrentThread.CurrentCulture = defaultCultureInfo;
+                Thread.CurrentThread.CurrentUICulture = defaultCultureInfo;
             }
         }
 
