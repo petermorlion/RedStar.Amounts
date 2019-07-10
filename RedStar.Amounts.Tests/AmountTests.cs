@@ -240,21 +240,14 @@ namespace RedStar.Amounts.Tests
             Assert.Equal("1234.5678 m", Amount.ToString(a).Replace(",", "."));
             Assert.Equal("1234.5678 m", Amount.ToString(a, enus));
             Assert.Equal("1234,5678 m", Amount.ToString(a, nlbe));
-            Assert.Equal("1.234.57 m", Amount.ToString(a, "#,##0.00 US").Replace(",", "."));
-            Assert.Equal("1,234.57 m", Amount.ToString(a, "#,##0.00 US", enus));
-            Assert.Equal("1.234,57 m", Amount.ToString(a, "#,##0.00 US", nlbe));
+            Assert.Equal("1,234.57 m", Amount.ToString(a, "#,##0.00 US"));
+            Assert.Equal("1234.57 m", Amount.ToString(a, "###0.00 US"));
 
             Assert.Equal("", Amount.ToString(b).Replace(",", "."));
             Assert.Equal("", Amount.ToString(b, enus));
             Assert.Equal("", Amount.ToString(b, nlbe));
-            Assert.Equal("", Amount.ToString(b, "#,##0.00 US").Replace(",", "."));
-            Assert.Equal("", Amount.ToString(b, "#,##0.00 US", enus));
-            Assert.Equal("", Amount.ToString(b, "#,##0.00 US", nlbe));
-
-            Amount x = null;
-            var s = "";
-            s = s + Amount.ToString(x, "#,##0.00 US|meter");
-
+            Assert.Equal("", Amount.ToString(b, "#,##0.00 US"));
+            Assert.Equal("", Amount.ToString(b, "#,##0.00 US"));
         }
 
         [Fact]
