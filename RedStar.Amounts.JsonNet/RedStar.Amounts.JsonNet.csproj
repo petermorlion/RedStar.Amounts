@@ -2,10 +2,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <TargetFrameworks>netstandard2.0</TargetFrameworks>
-        <Version>3.0.0</Version>
+        <Version>3.0.1</Version>
         <Authors>Peter Morlion</Authors>
         <Company>Red Star IT</Company>
-        <PackageLicenseUrl>https://github.com/petermorlion/RedStar.Amounts/blob/master/MIT.md</PackageLicenseUrl>
+        <PackageLicenseUrl></PackageLicenseUrl>
         <Title>RedStar Amounts for Json.NET</Title>
         <Description>Custom converters for serializing and deseriazling RedStar.Amounts types to JSON using NewtonSoft's JSON.NET library.</Description>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
@@ -19,6 +19,7 @@
         <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
         <FileVersion>2.1.0.0</FileVersion>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
     </PropertyGroup>
     <ItemGroup>
       <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta-63127-02" PrivateAssets="All" />
