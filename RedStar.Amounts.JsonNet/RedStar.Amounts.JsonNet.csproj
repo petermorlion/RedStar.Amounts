@@ -19,7 +19,8 @@
         <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
         <FileVersion>2.1.0.0</FileVersion>
-        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageLicenseExpression></PackageLicenseExpression>
+        <PackageLicenseFile>MIT.md</PackageLicenseFile>
     </PropertyGroup>
     <ItemGroup>
       <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta-63127-02" PrivateAssets="All" />
@@ -27,5 +28,11 @@
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\RedStar.Amounts\RedStar.Amounts.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+      <None Include="..\MIT.md">
+        <Pack>True</Pack>
+        <PackagePath></PackagePath>
+      </None>
     </ItemGroup>
 </Project>
