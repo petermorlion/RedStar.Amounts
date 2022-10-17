@@ -2,7 +2,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <TargetFrameworks>netstandard2.0</TargetFrameworks>
-        <Version>4.1.4</Version>
+        <Version>4.1.5</Version>
         <Authors>Peter Morlion</Authors>
         <Company>Red Star IT</Company>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -16,8 +16,8 @@
         <PublishRepositoryUrl>true</PublishRepositoryUrl>
         <EmbedUntrackedSources>true</EmbedUntrackedSources>
         <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
-        <AssemblyVersion>4.1.4.0</AssemblyVersion>
-        <FileVersion>4.1.4.0</FileVersion>
+        <AssemblyVersion>4.1.5.0</AssemblyVersion>
+        <FileVersion>4.1.5.0</FileVersion>
         <PackageLicenseExpression></PackageLicenseExpression>
         <PackageLicenseFile>CPOL.md</PackageLicenseFile>
         <PackageReadmeFile>README.md</PackageReadmeFile>
@@ -30,7 +30,7 @@
         <Pack>True</Pack>
         <PackagePath></PackagePath>
       </None>
-      <None Include="..\README.md">
+      <None Include="..\README.md" Link="README.md">
         <Pack>True</Pack>
         <PackagePath>\</PackagePath>
       </None>
