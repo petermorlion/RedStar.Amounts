@@ -3,7 +3,7 @@ using Xunit;
 
 namespace RedStar.Amounts.Tests
 {
-    public class MathExtensionsTests
+    public class ExtensionsTests
     {
         private class MyClass
         {
