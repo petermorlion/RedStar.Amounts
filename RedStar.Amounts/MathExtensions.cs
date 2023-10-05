@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace RedStar.Amounts
 {
-    public static class Extensions
+    public static class MathExtensions
     {
         /// <summary>Computes the sum of a sequence of Amounts. The units must be convertible to each other.</summary>
         /// <param name="source">A sequence of Amounts to calculate the sum of.</param>
