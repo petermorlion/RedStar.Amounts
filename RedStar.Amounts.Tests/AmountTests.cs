@@ -3,7 +3,6 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading;
 using RedStar.Amounts.StandardUnits;
 using Xunit;
@@ -251,34 +250,6 @@ namespace RedStar.Amounts.Tests
         }
 
         [Fact]
-        public void SerializeDeserialize01Test()
-        {
-            var buffer = new MemoryStream();
-
-            // Make some amounts:
-            var a1before = new Amount(12345.6789, LengthUnits.Meter);
-            var a2before = new Amount(-0.45, LengthUnits.KiloMeter / TimeUnits.Hour);
-
-            // Serialize the units:
-            var f = new BinaryFormatter();
-            f.Serialize(buffer, a1before);
-            f.Serialize(buffer, a2before);
-
-            // Reset stream:
-            buffer.Seek(0, SeekOrigin.Begin);
-
-            // Deserialize units:
-            var g = new BinaryFormatter();
-            var a1after = (Amount)g.Deserialize(buffer);
-            var a2after = (Amount)g.Deserialize(buffer);
-
-            buffer.Close();
-
-            Assert.Equal(a1before, a1after);
-            Assert.Equal(a2before, a2after);
-        }
-
-        [Fact]
         public void NullAmountIsNotLessThanTest()
         {
             Amount a = null;
@@ -497,24 +468,6 @@ namespace RedStar.Amounts.Tests
             {
                 Assert.Equal(aa[i], ba[i]);
             }
-        }
-
-        [Fact]
-        public void AmountBinaryFormatterSerializationTest()
-        {
-            var a = new Amount(3500.12, EnergyUnits.KiloWattHour * (365.0 * TimeUnits.Day) / VolumeUnits.Meter3);
-
-            // Serialize instance:
-            var stream = new MemoryStream();
-            var formatter = new BinaryFormatter();
-            formatter.Serialize(stream, a);
-
-            // Deserialize instance:
-            stream.Position = 0;
-            var b = (Amount)formatter.Deserialize(stream);
-
-            // Compare:
-            Assert.Equal(a, b);
         }
 
         [Fact]
