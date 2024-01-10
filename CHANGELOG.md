@@ -1,11 +1,21 @@
 # Changelog
 
+This project may seem dormant, but it is mainly due to having reach a stable point.
+It is still actively being maintained and is safe to use in production applications.
+If you encounter any issues or need extra features, don't hesitate to create an issue.
+
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [4.2.0] - 2022-10-17
+
+### Added
+
+- Added info on project still being maintained
 
 ## [4.1.5] - 2022-10-17
 

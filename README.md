@@ -2,6 +2,10 @@
 
 [![Build status](https://ci.appveyor.com/api/projects/status/swyqov7lwwv52cg3?svg=true)](https://ci.appveyor.com/project/petermorlion/redstar-amounts)
 
+**This project may seem dormant, but it is mainly due to having reach a stable point.
+It is still actively being maintained and is safe to use in production applications.
+If you encounter any issues or need extra features, don't hesitate to create an issue.**
+
 RedStar.Amounts contains classes to easily work with unit and amounts.
 
 Too often, applications use integers, doubles, etc. to indicate distances,
